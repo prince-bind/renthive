@@ -64,9 +64,9 @@ export function HeroSection() {
           <div className="relative">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <img
-                src="/modern-student-housing.png"
+                src="/hero-image.png"
                 alt="Modern student accommodation"
-                className="w-full h-[600px] object-cover"
+                className="w-full  object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
             </div>

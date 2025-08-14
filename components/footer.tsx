@@ -15,8 +15,7 @@ export function Footer() {
               <span className="font-heading text-xl font-bold">RentHive</span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed">
-              Connecting students with perfect accommodations near their colleges. Your trusted partner in finding the
-              ideal PG, flat, or hostel.
+              Your trusted partner in finding the ideal PG and Flats.
             </p>
             <div className="flex space-x-4">
               <Link href="#" className="text-gray-400 hover:text-brand-primary transition-colors">
