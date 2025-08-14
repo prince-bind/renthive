@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { MapPin, Star, Wifi, Car, Utensils, Shield, Heart, Eye } from "lucide-react"
+import Image from "next/image"
 
 const featuredProperties = [
   {
@@ -78,11 +79,19 @@ export function FeaturedProperties() {
               className="overflow-hidden hover:shadow-lg transition-shadow duration-300 border-0 shadow-md"
             >
               <div className="relative">
-                <img
+                {/* <img
                   src={property.image || "/placeholder.svg"}
                   alt={property.title}
                   className="w-full h-48 object-cover"
+                /> */}
+                <Image
+                  src={property.image || "/placeholder.svg"}
+                  width={720}
+                  height={720}
+                  alt={property.title}
+                  className="w-full h-48 object-cover"
                 />
+
                 {property.featured && (
                   <Badge className="absolute top-3 left-3 bg-brand-accent text-white">Featured</Badge>
                 )}

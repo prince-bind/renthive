@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { Mail, Phone, MapPin, Clock, MessageCircle, Globe } from "lucide-react"
+import { Mail, Phone, MapPin, Clock, Globe } from "lucide-react"
 
 export function ContactInfo() {
   return (
@@ -81,7 +81,7 @@ export function ContactInfo() {
             </div>
             <div>
               <h3 className="font-semibold text-lg text-gray-900 mb-1">Business Hours</h3>
-              <p className="text-gray-600 mb-2">When we're available</p>
+              <p className="text-gray-600 mb-2">When we&apos;re available</p>
               <div className="space-y-1 text-sm">
                 <p>
                   <span className="font-medium">Monday - Friday:</span> 9:00 AM - 7:00 PM

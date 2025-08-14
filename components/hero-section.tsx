@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { ArrowRight, MapPin, Shield, Star } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 export function HeroSection() {
   return (
@@ -63,9 +64,16 @@ export function HeroSection() {
           {/* Hero Image */}
           <div className="relative">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <img
+              {/* <img
                 src="/hero-image.png"
                 alt="Modern student accommodation"
+                className="w-full  object-cover"
+              /> */}
+              <Image
+                src="/hero-image.png"
+                width={700}
+                height={700}
+                alt="hero-image"
                 className="w-full  object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />

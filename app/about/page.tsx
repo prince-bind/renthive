@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Users, Shield, Award, Heart, Target, Eye } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function AboutPage() {
   return (
@@ -15,7 +16,7 @@ export default function AboutPage() {
           <div className="text-center">
             <h1 className="font-heading text-4xl md:text-5xl font-bold text-white mb-4">About RentHive</h1>
             <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-              Connecting students with perfect accommodations near their colleges. We're making student housing search
+              Connecting students with perfect accommodations near their colleges. We&apos;re making student housing search
               simple, safe, and reliable.
             </p>
           </div>
@@ -44,14 +45,21 @@ export default function AboutPage() {
                   <Eye className="h-8 w-8 text-brand-secondary" />
                 </div>
                 <p className="text-lg text-gray-600 leading-relaxed">
-                  To become India's most trusted student accommodation platform, where every student finds their perfect
+                  To become India&apos;s most trusted student accommodation platform, where every student finds their perfect
                   home away from home with complete peace of mind.
                 </p>
               </div>
             </div>
 
             <div className="relative">
-              <img src="/modern-student-study.png" alt="Students in accommodation" className="rounded-lg shadow-lg" />
+              {/* <img src="/modern-student-study.png" alt="Students in accommodation" className="rounded-lg shadow-lg" /> */}
+              <Image
+                src="/modern-student-study.png"
+                width={800}
+                height={500}
+                alt="Picture of the author"
+                className="rounded-lg shadow-lg"
+              />
             </div>
           </div>
         </div>
@@ -152,8 +160,15 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
-              <img
+              {/* <img
                 src="/prince.jpg"
+                alt="Founder"
+                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
+              /> */}
+              <Image
+                src="/prince.jpg"
+                width={128}
+                height={128}
                 alt="Founder"
                 className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
               />
@@ -162,8 +177,15 @@ export default function AboutPage() {
               <p className="text-gray-600 text-sm mt-2">Ex-student who experienced accommodation struggles firsthand</p>
             </div>
             <div className="text-center">
-              <img
+              {/* <img
                 src="/ankit.jpg"
+                alt="CTO"
+                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
+              /> */}
+              <Image
+                src="/ankit.jpg"
+                width={128}
+                height={128}
                 alt="CTO"
                 className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
               />
@@ -172,8 +194,15 @@ export default function AboutPage() {
               <p className="text-gray-600 text-sm mt-2">Tech expert passionate about solving real-world problems</p>
             </div>
             <div className="text-center">
-              <img
+              {/* <img
                 src="/aman.jpg"
+                alt="COO"
+                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
+              /> */}
+              <Image
+                src="/aman.jpg"
+                width={128}
+                height={128}
                 alt="COO"
                 className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
               />
@@ -190,7 +219,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-heading text-3xl font-bold text-white mb-4">Ready to Find Your Perfect Accommodation?</h2>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of students who have found their ideal living spaces through PGFinder
+            Join thousands of students who have found their ideal living spaces through RentHive
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild>
