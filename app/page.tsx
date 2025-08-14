@@ -1,13 +1,21 @@
-import React from "react";
+import { Header } from "@/components/header"
+import { HeroSection } from "@/components/hero-section"
+import { SearchSection } from "@/components/search-section"
+import { FeaturedProperties } from "@/components/featured-properties"
+import { HowItWorks } from "@/components/how-it-works"
+import { Footer } from "@/components/footer"
 
 export default function Home() {
   return (
-    <>
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200">
-        <h1 className="text-6xl font-bold text-red-700">Welcome to RentHive</h1>
-        <br />
-        <p className="text-4xl">Your one-stop solution for renting properties.</p>
-      </div>
-    </>
-  );
+    <div className="min-h-screen bg-background">
+      <Header />
+      <main>
+        <HeroSection />
+        <SearchSection />
+        <FeaturedProperties />
+        <HowItWorks />
+      </main>
+      <Footer />
+    </div>
+  )
 }
