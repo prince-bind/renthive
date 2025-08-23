@@ -4,9 +4,19 @@ import { useState } from "react"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
 import Image from "next/image"
+import { usePathname } from 'next/navigation';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const currentPath = usePathname();
+  const links = [
+    { label: "Find PG/Flats", href: '/search' },
+    { label: "List Your Property", href: '/list-property' },
+    { label: "About", href: '/about' },
+    { label: "Contact", href: '/contact' }
+  ]
+
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -28,30 +38,23 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/search" className="text-sm font-medium hover:text-brand-primary transition-colors">
-              Find PG/Flats
-            </Link>
-            <Link href="/list-property" className="text-sm font-medium hover:text-brand-primary transition-colors">
-              List Your Property
-            </Link>
-            <Link href="/about" className="text-sm font-medium hover:text-brand-primary transition-colors">
-              About
-            </Link>
-            <Link href="/contact" className="text-sm font-medium hover:text-brand-primary transition-colors">
-              Contact
-            </Link>
+            {links.map(link => (
+                <Link key={link.href} href={link.href} className={`${link.href === currentPath ? 'text-slate-950' : 'text-slate-600'} text-md font-medium hover:text-brand-primary transition-colors`}>
+                  {link.label}
+                </Link>
+            ))}
           </nav>
 
           <div className="hidden md:flex items-center space-x-4">
             <Link
               href="/login"
-              className="text-sm font-medium text-gray-700 hover:text-brand-primary transition-colors duration-200"
+              className="text-md font-medium text-gray-700 hover:text-brand-primary transition-colors duration-200"
             >
               Login
             </Link>
             <Link
               href="/register"
-              className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-brand-primary hover:bg-brand-primary/90 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md"
+              className="inline-flex items-center justify-center px-4 py-2 text-md font-medium text-white bg-brand-primary hover:bg-brand-primary/90 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md"
             >
               Sign Up
             </Link>

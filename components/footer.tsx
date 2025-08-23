@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Home, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from "lucide-react"
+// import Image from "next/image"
 
 export function Footer() {
   return (
@@ -9,10 +10,16 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center space-x-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-primary">
-                <Home className="h-5 w-5 text-white" />
-              </div>
-              <span className="font-heading text-xl font-bold">RentHive</span>
+              {/* <div className="flex h-12 w-12 items-center justify-center rounded-lg">
+                <Image
+                  src="/renthive-logo.jpg"
+                  width={40}
+                  height={40}
+                  alt="hero-image"
+                  className="w-full h-full object-cover rounded-lg"
+                />
+              </div> */}
+              <span className="font-heading text-2xl font-bold text-white">RentHive</span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed">
               Your trusted partner in finding the ideal PG and Flats.
@@ -107,7 +114,7 @@ export function Footer() {
               <li className="flex items-start space-x-3">
                 <MapPin className="h-4 w-4 text-brand-primary mt-0.5" />
                 <span className="text-gray-400 text-sm">
-                  DTU, Shahbad Daulatpur, 
+                  DTU, Shahbad Daulatpur,
                   <br />
                   Delhi - 110042
                 </span>
