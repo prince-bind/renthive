@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button"
 import { ArrowRight, MapPin, Shield, Star } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
@@ -44,20 +43,19 @@ export function HeroSection() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" asChild className="bg-brand-primary hover:bg-brand-primary/90 text-white">
-                <Link href="/search">
-                  Find PG/Flats
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                asChild
-                className="border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white bg-transparent"
+              <Link
+                href="/search"
+                className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-brand-primary hover:bg-brand-primary/90 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 transform hover:scale-105"
               >
-                <Link href="/list-property">List Your Property</Link>
-              </Button>
+                Find PG/Flats
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+              <Link
+                href="/list-property"
+                className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-brand-primary bg-transparent border border-brand-primary hover:bg-brand-primary hover:text-white rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 transform hover:scale-105"
+              >
+                List Your Property
+              </Link>
             </div>
           </div>
 
@@ -65,9 +63,9 @@ export function HeroSection() {
           <div className="relative">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               {/* <img
-                src="/hero-image.png"
+                src="/modern-student-housing.png"
                 alt="Modern student accommodation"
-                className="w-full  object-cover"
+                className="w-full h-[600px] object-cover"
               /> */}
               <Image
                 src="/hero-image.png"

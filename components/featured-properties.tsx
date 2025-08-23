@@ -1,7 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { MapPin, Star, Wifi, Car, Utensils, Shield, Heart, Eye } from "lucide-react"
+import { MapPin, Star, Heart, Eye } from "lucide-react"
 import Image from "next/image"
 
 const featuredProperties = [
@@ -49,18 +46,6 @@ const featuredProperties = [
   },
 ]
 
-const amenityIcons = {
-  WiFi: Wifi,
-  AC: "❄️",
-  Laundry: "👕",
-  Security: Shield,
-  Parking: Car,
-  Kitchen: "🍳",
-  Balcony: "🏠",
-  Meals: Utensils,
-  Gym: "💪",
-}
-
 export function FeaturedProperties() {
   return (
     <section className="py-16 bg-gray-50">
@@ -74,16 +59,11 @@ export function FeaturedProperties() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {featuredProperties.map((property) => (
-            <Card
+            <div
               key={property.id}
-              className="overflow-hidden hover:shadow-lg transition-shadow duration-300 border-0 shadow-md"
+              className="overflow-hidden hover:shadow-lg transition-all duration-300 border-0 shadow-md bg-white rounded-lg transform hover:scale-105"
             >
               <div className="relative">
-                {/* <img
-                  src={property.image || "/placeholder.svg"}
-                  alt={property.title}
-                  className="w-full h-48 object-cover"
-                /> */}
                 <Image
                   src={property.image || "/placeholder.svg"}
                   width={720}
@@ -91,31 +71,31 @@ export function FeaturedProperties() {
                   alt={property.title}
                   className="w-full h-48 object-cover"
                 />
-
                 {property.featured && (
-                  <Badge className="absolute top-3 left-3 bg-brand-accent text-white">Featured</Badge>
+                  <span className="absolute top-3 left-3 px-2 py-1 bg-brand-accent text-white text-xs font-medium rounded">
+                    Featured
+                  </span>
                 )}
                 <div className="absolute top-3 right-3 flex gap-2">
-                  <Button size="sm" variant="secondary" className="h-8 w-8 p-0 bg-white/90 hover:bg-white">
+                  <button className="h-8 w-8 p-0 bg-white/90 hover:bg-white rounded-md transition-colors duration-200 flex items-center justify-center">
                     <Heart className="h-4 w-4" />
-                  </Button>
-                  <Button size="sm" variant="secondary" className="h-8 w-8 p-0 bg-white/90 hover:bg-white">
+                  </button>
+                  <button className="h-8 w-8 p-0 bg-white/90 hover:bg-white rounded-md transition-colors duration-200 flex items-center justify-center">
                     <Eye className="h-4 w-4" />
-                  </Button>
+                  </button>
                 </div>
               </div>
 
-              <CardContent className="p-6">
+              <div className="p-6">
                 <div className="space-y-4">
-                  {/* Header */}
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <Badge variant="outline" className="text-xs">
+                      <span className="px-2 py-1 border border-gray-300 text-gray-700 text-xs font-medium rounded">
                         {property.type}
-                      </Badge>
-                      <Badge variant="secondary" className="text-xs">
+                      </span>
+                      <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded">
                         {property.gender}
-                      </Badge>
+                      </span>
                     </div>
                     <h3 className="font-semibold text-lg mb-1">{property.title}</h3>
                     <div className="flex items-center text-sm text-muted-foreground">
@@ -124,7 +104,6 @@ export function FeaturedProperties() {
                     </div>
                   </div>
 
-                  {/* Rating & Reviews */}
                   <div className="flex items-center gap-2">
                     <div className="flex items-center">
                       <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
@@ -133,16 +112,14 @@ export function FeaturedProperties() {
                     <span className="text-sm text-muted-foreground">({property.reviews} reviews)</span>
                   </div>
 
-                  {/* Amenities */}
                   <div className="flex flex-wrap gap-2">
                     {property.amenities.slice(0, 4).map((amenity) => (
-                      <Badge key={amenity} variant="secondary" className="text-xs">
+                      <span key={amenity} className="px-2 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded">
                         {amenity}
-                      </Badge>
+                      </span>
                     ))}
                   </div>
 
-                  {/* Price & Availability */}
                   <div className="flex items-center justify-between pt-4 border-t">
                     <div>
                       <span className="text-2xl font-bold text-brand-primary">₹{property.rent.toLocaleString()}</span>
@@ -153,22 +130,19 @@ export function FeaturedProperties() {
                     </div>
                   </div>
 
-                  {/* Action Button */}
-                  <Button className="w-full bg-brand-primary hover:bg-brand-primary/90">View Details</Button>
+                  <button className="w-full px-4 py-2 bg-brand-primary hover:bg-brand-primary/90 text-white rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 transform hover:scale-105">
+                    View Details
+                  </button>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
 
         <div className="text-center mt-12">
-          <Button
-            variant="outline"
-            size="lg"
-            className="border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white bg-transparent"
-          >
+          <button className="px-6 py-3 border border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white bg-transparent rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 transform hover:scale-105">
             View All Properties
-          </Button>
+          </button>
         </div>
       </div>
     </section>

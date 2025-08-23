@@ -1,16 +1,30 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card } from "@/components/ui/card"
-import { Search, MapPin, SlidersHorizontal } from "lucide-react"
+import { Search, MapPin, SlidersHorizontal, ChevronDown } from "lucide-react"
 
 export function SearchSection() {
   const [location, setLocation] = useState("")
   const [propertyType, setPropertyType] = useState("")
   const [budget, setBudget] = useState("")
+  const [isPropertyTypeOpen, setIsPropertyTypeOpen] = useState(false)
+  const [isBudgetOpen, setIsBudgetOpen] = useState(false)
+
+  const propertyTypes = [
+    { value: "all", label: "All Types" },
+    { value: "pg", label: "PG" },
+    { value: "flat", label: "Flat" },
+    { value: "hostel", label: "Hostel" },
+  ]
+
+  const budgetRanges = [
+    { value: "all", label: "Any Budget" },
+    { value: "0-5000", label: "Under ₹5,000" },
+    { value: "5000-10000", label: "₹5,000 - ₹10,000" },
+    { value: "10000-15000", label: "₹10,000 - ₹15,000" },
+    { value: "15000-20000", label: "₹15,000 - ₹20,000" },
+    { value: "20000+", label: "Above ₹20,000" },
+  ]
 
   return (
     <section className="py-16 bg-white">
@@ -22,18 +36,19 @@ export function SearchSection() {
           </p>
         </div>
 
-        <Card className="p-6 shadow-lg border-0 bg-gradient-to-r from-gray-50 to-white">
+        <div className="p-6 shadow-lg border-0 bg-gradient-to-r from-gray-50 to-white rounded-lg">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
             {/* Location Search */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">Location</label>
               <div className="relative">
                 <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <Input
+                <input
+                  type="text"
                   placeholder="Enter city, college name..."
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="pl-10 h-12"
+                  className="w-full pl-10 h-12 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all duration-200"
                 />
               </div>
             </div>
@@ -41,45 +56,80 @@ export function SearchSection() {
             {/* Property Type */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">Property Type</label>
-              <Select value={propertyType} onValueChange={setPropertyType}>
-                <SelectTrigger className="h-12">
-                  <SelectValue placeholder="Select type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Types</SelectItem>
-                  <SelectItem value="pg">PG</SelectItem>
-                  <SelectItem value="flat">Flat</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="relative">
+                <button
+                  onClick={() => setIsPropertyTypeOpen(!isPropertyTypeOpen)}
+                  className="w-full h-12 px-3 py-2 text-left bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all duration-200 flex items-center justify-between"
+                >
+                  <span className={propertyType ? "text-gray-900" : "text-gray-500"}>
+                    {propertyTypes.find((type) => type.value === propertyType)?.label || "Select type"}
+                  </span>
+                  <ChevronDown
+                    className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${isPropertyTypeOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+                {isPropertyTypeOpen && (
+                  <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
+                    {propertyTypes.map((type) => (
+                      <button
+                        key={type.value}
+                        onClick={() => {
+                          setPropertyType(type.value)
+                          setIsPropertyTypeOpen(false)
+                        }}
+                        className="w-full px-3 py-2 text-left hover:bg-gray-100 transition-colors duration-150 first:rounded-t-md last:rounded-b-md"
+                      >
+                        {type.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Budget Range */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">Budget</label>
-              <Select value={budget} onValueChange={setBudget}>
-                <SelectTrigger className="h-12">
-                  <SelectValue placeholder="Select budget" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Any Budget</SelectItem>
-                  <SelectItem value="0-5000">Under ₹5,000</SelectItem>
-                  <SelectItem value="5000-10000">₹5,000 - ₹10,000</SelectItem>
-                  <SelectItem value="10000-15000">₹10,000 - ₹15,000</SelectItem>
-                  <SelectItem value="15000-20000">₹15,000 - ₹20,000</SelectItem>
-                  <SelectItem value="20000+">Above ₹20,000</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="relative">
+                <button
+                  onClick={() => setIsBudgetOpen(!isBudgetOpen)}
+                  className="w-full h-12 px-3 py-2 text-left bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all duration-200 flex items-center justify-between"
+                >
+                  <span className={budget ? "text-gray-900" : "text-gray-500"}>
+                    {budgetRanges.find((range) => range.value === budget)?.label || "Select budget"}
+                  </span>
+                  <ChevronDown
+                    className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${isBudgetOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+                {isBudgetOpen && (
+                  <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
+                    {budgetRanges.map((range) => (
+                      <button
+                        key={range.value}
+                        onClick={() => {
+                          setBudget(range.value)
+                          setIsBudgetOpen(false)
+                        }}
+                        className="w-full px-3 py-2 text-left hover:bg-gray-100 transition-colors duration-150 first:rounded-t-md last:rounded-b-md"
+                      >
+                        {range.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Search Button */}
             <div className="flex gap-2">
-              <Button size="lg" className="flex-1 h-12 bg-brand-primary hover:bg-brand-primary/90">
+              <button className="flex-1 h-12 px-4 py-2 bg-brand-primary hover:bg-brand-primary/90 text-white rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 transform hover:scale-105 flex items-center justify-center">
                 <Search className="mr-2 h-4 w-4" />
                 Search
-              </Button>
-              <Button size="lg" variant="outline" className="h-12 px-3 bg-transparent">
+              </button>
+              <button className="h-12 px-3 py-2 bg-transparent border border-gray-300 hover:bg-gray-50 text-gray-700 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2">
                 <SlidersHorizontal className="h-4 w-4" />
-              </Button>
+              </button>
             </div>
           </div>
 
@@ -89,24 +139,22 @@ export function SearchSection() {
             <div className="flex flex-wrap gap-2">
               {[
                 "PG near IIT Delhi",
-                "Girls PG in Delhi",
-                "Flats near DTU",
-                "Boys Hostel NSUT",
-                "Affordable PG DTU",
-                "AC Rooms Delhi",
+                "Girls PG in Bangalore",
+                "Flats near DU",
+                "Boys Hostel Mumbai",
+                "Affordable PG Pune",
+                "AC Rooms Chennai",
               ].map((tag) => (
-                <Button
+                <button
                   key={tag}
-                  variant="outline"
-                  size="sm"
-                  className="text-xs hover:bg-brand-primary hover:text-white hover:border-brand-primary bg-transparent"
+                  className="px-3 py-1 text-xs bg-transparent border border-gray-300 hover:bg-brand-primary hover:text-white hover:border-brand-primary text-gray-700 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-1"
                 >
                   {tag}
-                </Button>
+                </button>
               ))}
             </div>
           </div>
-        </Card>
+        </div>
       </div>
     </section>
   )

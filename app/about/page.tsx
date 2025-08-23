@@ -1,6 +1,4 @@
 import { Header } from "@/components/header"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import { Users, Shield, Award, Heart, Target, Eye } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
@@ -11,11 +9,11 @@ export default function AboutPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-brand-primary to-brand-secondary py-16">
+      <section className="bg-gradient-to-br from-blue-600 to-teal-600 py-16 transition-all duration-500 ease-in-out">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="font-heading text-4xl md:text-5xl font-bold text-white mb-4">About RentHive</h1>
-            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+          <div className="text-center transform transition-all duration-700 ease-out">
+            <h1 className="font-bold text-4xl md:text-5xl text-white mb-4 animate-fade-in">About RentHive</h1>
+            <p className="text-xl text-blue-100 max-w-3xl mx-auto transition-opacity duration-500 delay-300">
               Connecting students with perfect accommodations near their colleges. We&apos;re making student housing search
               simple, safe, and reliable.
             </p>
@@ -27,38 +25,41 @@ export default function AboutPage() {
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="font-heading text-3xl font-bold text-gray-900 mb-6">Our Mission</h2>
-              <div className="flex items-start space-x-4 mb-6">
-                <div className="flex-shrink-0">
-                  <Target className="h-8 w-8 text-brand-primary" />
+            <div className="space-y-8">
+              <div className="transform transition-all duration-500 hover:translate-x-2">
+                <h2 className="font-bold text-3xl text-gray-900 mb-6">Our Mission</h2>
+                <div className="flex items-start space-x-4 mb-6">
+                  <div className="flex-shrink-0 transition-transform duration-300 hover:scale-110">
+                    <Target className="h-8 w-8 text-blue-600" />
+                  </div>
+                  <p className="text-lg text-gray-600 leading-relaxed transition-colors duration-300 hover:text-gray-800">
+                    To revolutionize student accommodation by creating a trusted platform that connects students with
+                    verified, affordable, and comfortable living spaces near their colleges.
+                  </p>
                 </div>
-                <p className="text-lg text-gray-600 leading-relaxed">
-                  To revolutionize student accommodation by creating a trusted platform that connects students with
-                  verified, affordable, and comfortable living spaces near their colleges.
-                </p>
               </div>
 
-              <h2 className="font-heading text-3xl font-bold text-gray-900 mb-6">Our Vision</h2>
-              <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0">
-                  <Eye className="h-8 w-8 text-brand-secondary" />
+              <div className="transform transition-all duration-500 hover:translate-x-2">
+                <h2 className="font-bold text-3xl text-gray-900 mb-6">Our Vision</h2>
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 transition-transform duration-300 hover:scale-110">
+                    <Eye className="h-8 w-8 text-teal-600" />
+                  </div>
+                  <p className="text-lg text-gray-600 leading-relaxed transition-colors duration-300 hover:text-gray-800">
+                    To become India&apos;s most trusted student accommodation platform, where every student finds their
+                    perfect home away from home with complete peace of mind.
+                  </p>
                 </div>
-                <p className="text-lg text-gray-600 leading-relaxed">
-                  To become India&apos;s most trusted student accommodation platform, where every student finds their perfect
-                  home away from home with complete peace of mind.
-                </p>
               </div>
             </div>
 
-            <div className="relative">
-              {/* <img src="/modern-student-study.png" alt="Students in accommodation" className="rounded-lg shadow-lg" /> */}
+            <div className="relative ">
               <Image
                 src="/modern-student-study.png"
                 width={800}
                 height={500}
                 alt="Picture of the author"
-                className="rounded-lg shadow-lg"
+                className="rounded-lg shadow-lg transition-shadow duration-300 hover:shadow-2xl"
               />
             </div>
           </div>
@@ -69,52 +70,66 @@ export default function AboutPage() {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl font-bold text-gray-900 mb-4">Our Core Values</h2>
+            <h2 className="font-bold text-3xl text-gray-900 mb-4 transition-colors duration-300">Our Core Values</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">The principles that guide everything we do</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
-              <CardContent className="pt-6">
-                <div className="w-16 h-16 bg-brand-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Shield className="h-8 w-8 text-brand-primary" />
+            <div className="text-center p-6 bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-lg hover:scale-105 hover:-translate-y-2 transition-all duration-300 ease-in-out">
+              <div className="pt-6">
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 transition-all duration-300 hover:bg-blue-200 hover:scale-110">
+                  <Shield className="h-8 w-8 text-blue-600 transition-transform duration-300" />
                 </div>
-                <h3 className="font-semibold text-lg text-gray-900 mb-2">Trust & Safety</h3>
-                <p className="text-gray-600">
+                <h3 className="font-semibold text-lg text-gray-900 mb-2 transition-colors duration-300 hover:text-blue-600">
+                  Trust & Safety
+                </h3>
+                <p className="text-gray-600 transition-colors duration-300 hover:text-gray-800">
                   Every property is verified and every user is authenticated for maximum safety.
                 </p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
-              <CardContent className="pt-6">
-                <div className="w-16 h-16 bg-brand-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="h-8 w-8 text-brand-secondary" />
+            <div className="text-center p-6 bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-lg hover:scale-105 hover:-translate-y-2 transition-all duration-300 ease-in-out">
+              <div className="pt-6">
+                <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4 transition-all duration-300 hover:bg-teal-200 hover:scale-110">
+                  <Users className="h-8 w-8 text-teal-600 transition-transform duration-300" />
                 </div>
-                <h3 className="font-semibold text-lg text-gray-900 mb-2">Student-First</h3>
-                <p className="text-gray-600">We prioritize student needs and make accommodation search hassle-free.</p>
-              </CardContent>
-            </Card>
+                <h3 className="font-semibold text-lg text-gray-900 mb-2 transition-colors duration-300 hover:text-teal-600">
+                  Student-First
+                </h3>
+                <p className="text-gray-600 transition-colors duration-300 hover:text-gray-800">
+                  We prioritize student needs and make accommodation search hassle-free.
+                </p>
+              </div>
+            </div>
 
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
-              <CardContent className="pt-6">
-                <div className="w-16 h-16 bg-brand-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Award className="h-8 w-8 text-brand-accent" />
+            <div className="text-center p-6 bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-lg hover:scale-105 hover:-translate-y-2 transition-all duration-300 ease-in-out">
+              <div className="pt-6">
+                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 transition-all duration-300 hover:bg-orange-200 hover:scale-110">
+                  <Award className="h-8 w-8 text-orange-600 transition-transform duration-300" />
                 </div>
-                <h3 className="font-semibold text-lg text-gray-900 mb-2">Quality</h3>
-                <p className="text-gray-600">We maintain high standards for all listings and user experiences.</p>
-              </CardContent>
-            </Card>
+                <h3 className="font-semibold text-lg text-gray-900 mb-2 transition-colors duration-300 hover:text-orange-600">
+                  Quality
+                </h3>
+                <p className="text-gray-600 transition-colors duration-300 hover:text-gray-800">
+                  We maintain high standards for all listings and user experiences.
+                </p>
+              </div>
+            </div>
 
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
-              <CardContent className="pt-6">
-                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Heart className="h-8 w-8 text-red-500" />
+            <div className="text-center p-6 bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-lg hover:scale-105 hover:-translate-y-2 transition-all duration-300 ease-in-out">
+              <div className="pt-6">
+                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 transition-all duration-300 hover:bg-red-200 hover:scale-110">
+                  <Heart className="h-8 w-8 text-red-500 transition-transform duration-300" />
                 </div>
-                <h3 className="font-semibold text-lg text-gray-900 mb-2">Community</h3>
-                <p className="text-gray-600">Building a supportive community of students and property owners.</p>
-              </CardContent>
-            </Card>
+                <h3 className="font-semibold text-lg text-gray-900 mb-2 transition-colors duration-300 hover:text-red-500">
+                  Community
+                </h3>
+                <p className="text-gray-600 transition-colors duration-300 hover:text-gray-800">
+                  Building a supportive community of students and property owners.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -123,26 +138,36 @@ export default function AboutPage() {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl font-bold text-gray-900 mb-4">Our Impact</h2>
+            <h2 className="font-bold text-3xl text-gray-900 mb-4">Our Impact</h2>
             <p className="text-lg text-gray-600">Numbers that showcase our growing community</p>
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-brand-primary mb-2">10,000+</div>
-              <div className="text-gray-600">Happy Students</div>
+            <div className="text-center transform transition-all duration-300 hover:scale-110 hover:-translate-y-2">
+              <div className="text-4xl font-bold text-blue-600 mb-2 transition-colors duration-300 hover:text-blue-700">
+                10,000+
+              </div>
+              <div className="text-gray-600 transition-colors duration-300 hover:text-gray-800">Happy Students</div>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-brand-secondary mb-2">5,000+</div>
-              <div className="text-gray-600">Verified Properties</div>
+            <div className="text-center transform transition-all duration-300 hover:scale-110 hover:-translate-y-2">
+              <div className="text-4xl font-bold text-teal-600 mb-2 transition-colors duration-300 hover:text-teal-700">
+                5,000+
+              </div>
+              <div className="text-gray-600 transition-colors duration-300 hover:text-gray-800">
+                Verified Properties
+              </div>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-brand-accent mb-2">200+</div>
-              <div className="text-gray-600">Partner Colleges</div>
+            <div className="text-center transform transition-all duration-300 hover:scale-110 hover:-translate-y-2">
+              <div className="text-4xl font-bold text-orange-600 mb-2 transition-colors duration-300 hover:text-orange-700">
+                200+
+              </div>
+              <div className="text-gray-600 transition-colors duration-300 hover:text-gray-800">Partner Colleges</div>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-green-600 mb-2">50+</div>
-              <div className="text-gray-600">Cities Covered</div>
+            <div className="text-center transform transition-all duration-300 hover:scale-110 hover:-translate-y-2">
+              <div className="text-4xl font-bold text-green-600 mb-2 transition-colors duration-300 hover:text-green-700">
+                50+
+              </div>
+              <div className="text-gray-600 transition-colors duration-300 hover:text-gray-800">Cities Covered</div>
             </div>
           </div>
         </div>
@@ -152,87 +177,92 @@ export default function AboutPage() {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl font-bold text-gray-900 mb-4">Meet Our Team</h2>
+            <h2 className="font-bold text-3xl text-gray-900 mb-4">Meet Our Team</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Passionate individuals working to make student accommodation search better
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="text-center">
+            <div className="text-center transform transition-all duration-300 hover:scale-105 hover:-translate-y-2">
               {/* <img
                 src="/prince.jpg"
                 alt="Founder"
-                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
+                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover transition-all duration-300 hover:shadow-lg hover:scale-110"
               /> */}
               <Image
                 src="/prince.jpg"
                 width={128}
                 height={128}
                 alt="Founder"
-                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
+                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover transition-all duration-300 hover:shadow-lg hover:scale-110"
               />
-              <h3 className="font-semibold text-lg text-gray-900">Prince Bind</h3>
-              <p className="text-brand-primary font-medium">Founder & CEO</p>
-              <p className="text-gray-600 text-sm mt-2">Ex-student who experienced accommodation struggles firsthand</p>
+              <h3 className="font-semibold text-lg text-gray-900 transition-colors duration-300 hover:text-blue-600">
+                Prince Bind
+              </h3>
+              <p className="text-blue-600 font-medium transition-colors duration-300">Founder & CEO</p>
+              <p className="text-gray-600 text-sm mt-2 transition-colors duration-300 hover:text-gray-800">
+                Ex-student who experienced accommodation struggles firsthand
+              </p>
             </div>
-            <div className="text-center">
-              {/* <img
-                src="/ankit.jpg"
-                alt="CTO"
-                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-              /> */}
+            <div className="text-center transform transition-all duration-300 hover:scale-105 hover:-translate-y-2">
               <Image
                 src="/ankit.jpg"
                 width={128}
                 height={128}
-                alt="CTO"
-                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
+                alt="Founder"
+                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover transition-all duration-300 hover:shadow-lg hover:scale-110"
               />
-              <h3 className="font-semibold text-lg text-gray-900">Ankit Kumar</h3>
-              <p className="text-brand-primary font-medium">Co-founder & CTO</p>
-              <p className="text-gray-600 text-sm mt-2">Tech expert passionate about solving real-world problems</p>
+              <h3 className="font-semibold text-lg text-gray-900 transition-colors duration-300 hover:text-blue-600">
+                Ankit Kumar
+              </h3>
+              <p className="text-blue-600 font-medium transition-colors duration-300">Co-founder & CTO</p>
+              <p className="text-gray-600 text-sm mt-2 transition-colors duration-300 hover:text-gray-800">
+                Tech expert passionate about solving real-world problems
+              </p>
             </div>
-            <div className="text-center">
-              {/* <img
-                src="/aman.jpg"
-                alt="COO"
-                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-              /> */}
+            <div className="text-center transform transition-all duration-300 hover:scale-105 hover:-translate-y-2">
               <Image
                 src="/aman.jpg"
                 width={128}
                 height={128}
-                alt="COO"
-                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
+                alt="Founder"
+                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover transition-all duration-300 hover:shadow-lg hover:scale-110"
               />
-              <h3 className="font-semibold text-lg text-gray-900">Aman Kumar</h3>
-              <p className="text-brand-primary font-medium">Head of Operations</p>
-              <p className="text-gray-600 text-sm mt-2">Ensuring smooth operations and customer satisfaction</p>
+              <h3 className="font-semibold text-lg text-gray-900 transition-colors duration-300 hover:text-blue-600">
+                Aman Kumar
+              </h3>
+              <p className="text-blue-600 font-medium transition-colors duration-300">Head of Operations</p>
+              <p className="text-gray-600 text-sm mt-2 transition-colors duration-300 hover:text-gray-800">
+                Ensuring smooth operations and customer satisfaction
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-gradient-to-r from-brand-primary to-brand-secondary">
+      <section className="py-16 bg-gradient-to-r from-blue-600 to-teal-600 transition-all duration-500">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-heading text-3xl font-bold text-white mb-4">Ready to Find Your Perfect Accommodation?</h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+          <h2 className="font-bold text-3xl text-white mb-4 transition-all duration-300">
+            Ready to Find Your Perfect Accommodation?
+          </h2>
+          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto transition-opacity duration-500">
             Join thousands of students who have found their ideal living spaces through RentHive
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" asChild>
-              <Link href="/register">Get Started Today</Link>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="bg-white/10 border-white text-white hover:bg-white hover:text-brand-primary"
-              asChild
+            <Link
+              href="/register"
+              className="inline-flex items-center justify-center px-8 py-3 text-lg font-medium text-blue-600 bg-white rounded-lg shadow-md hover:bg-gray-50 hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out"
             >
-              <Link href="/contact">Contact Us</Link>
-            </Button>
+              Get Started Today
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center px-8 py-3 text-lg font-medium text-white bg-white/10 border-2 border-white rounded-lg hover:bg-white hover:text-blue-600 hover:scale-105 transition-all duration-300 ease-in-out"
+            >
+              Contact Us
+            </Link>
           </div>
         </div>
       </section>

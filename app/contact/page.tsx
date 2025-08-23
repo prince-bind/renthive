@@ -8,7 +8,7 @@ export default function ContactPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-brand-primary to-brand-secondary py-16">
+      <section className="bg-gradient-to-br from-blue-600 to-teal-600 py-16 transition-all duration-500 ease-in-out">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="font-heading text-4xl md:text-5xl font-bold text-white mb-4">Get in Touch</h1>

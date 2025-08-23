@@ -1,14 +1,13 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Mail, Phone, MapPin, Clock, Globe } from "lucide-react"
+import { Mail, Phone, MapPin, Clock, MessageCircle, Globe } from "lucide-react"
 
 export function ContactInfo() {
   return (
     <div className="space-y-6">
-      <Card>
-        <CardContent className="p-6">
+      <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
+        <div className="p-6">
           <div className="flex items-start space-x-4">
             <div className="flex-shrink-0">
-              <Mail className="h-6 w-6 text-brand-primary" />
+              <Mail className="h-6 w-6 text-blue-600" />
             </div>
             <div>
               <h3 className="font-semibold text-lg text-gray-900 mb-1">Email Us</h3>
@@ -26,14 +25,14 @@ export function ContactInfo() {
               </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
-      <Card>
-        <CardContent className="p-6">
+      <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
+        <div className="p-6">
           <div className="flex items-start space-x-4">
             <div className="flex-shrink-0">
-              <Phone className="h-6 w-6 text-brand-primary" />
+              <Phone className="h-6 w-6 text-blue-600" />
             </div>
             <div>
               <h3 className="font-semibold text-lg text-gray-900 mb-1">Call Us</h3>
@@ -48,36 +47,37 @@ export function ContactInfo() {
               </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
-      <Card>
-        <CardContent className="p-6">
+      <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
+        <div className="p-6">
           <div className="flex items-start space-x-4">
             <div className="flex-shrink-0">
-              <MapPin className="h-6 w-6 text-brand-primary" />
+              <MapPin className="h-6 w-6 text-blue-600" />
             </div>
             <div>
               <h3 className="font-semibold text-lg text-gray-900 mb-1">Visit Us</h3>
-              <p className="text-gray-600 mb-2">Our Headquarters</p>
+              <p className="text-gray-600 mb-2">Our headquarters</p>
               <p className="text-sm">
                 RentHive Technologies Pvt. Ltd.
                 <br />
-                DTU, Shahbad daulatpur<br />
+                DTU, Shahbad daulatpur
+                <br />
                 Delhi - 110042
                 <br />
                 India
               </p>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
-      <Card>
-        <CardContent className="p-6">
+      <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
+        <div className="p-6">
           <div className="flex items-start space-x-4">
             <div className="flex-shrink-0">
-              <Clock className="h-6 w-6 text-brand-primary" />
+              <Clock className="h-6 w-6 text-blue-600" />
             </div>
             <div>
               <h3 className="font-semibold text-lg text-gray-900 mb-1">Business Hours</h3>
@@ -92,18 +92,18 @@ export function ContactInfo() {
                 <p>
                   <span className="font-medium">Sunday:</span> Closed
                 </p>
-                <p className="text-brand-primary font-medium mt-2">24/7 Emergency Support Available</p>
+                <p className="text-blue-600 font-medium mt-2">24/7 Emergency Support Available</p>
               </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
-      {/* <Card>
-        <CardContent className="p-6">
+      <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
+        <div className="p-6">
           <div className="flex items-start space-x-4">
             <div className="flex-shrink-0">
-              <MessageCircle className="h-6 w-6 text-brand-primary" />
+              <MessageCircle className="h-6 w-6 text-blue-600" />
             </div>
             <div>
               <h3 className="font-semibold text-lg text-gray-900 mb-1">Live Chat</h3>
@@ -111,14 +111,14 @@ export function ContactInfo() {
               <p className="text-sm">Available on our website during business hours for immediate assistance.</p>
             </div>
           </div>
-        </CardContent>
-      </Card> */}
+        </div>
+      </div>
 
-      <Card>
-        <CardContent className="p-6">
+      <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
+        <div className="p-6">
           <div className="flex items-start space-x-4">
             <div className="flex-shrink-0">
-              <Globe className="h-6 w-6 text-brand-primary" />
+              <Globe className="h-6 w-6 text-blue-600" />
             </div>
             <div>
               <h3 className="font-semibold text-lg text-gray-900 mb-1">Social Media</h3>
@@ -126,13 +126,13 @@ export function ContactInfo() {
               <div className="space-y-1 text-sm">
                 <p>Follow us for updates and tips</p>
                 <div className="flex space-x-4 mt-2">
-                  <span className="text-brand-primary">@RentHive</span>
+                  <span className="text-blue-600">@RentHive</span>
                 </div>
               </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   )
 }

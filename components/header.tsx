@@ -2,8 +2,8 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Menu, X, Home } from "lucide-react"
+import { Menu, X } from "lucide-react"
+import Image from "next/image"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -14,10 +14,16 @@ export function Header() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-primary">
-              <Home className="h-5 w-5 text-white" />
+            <div className="flex items-center justify-center">
+              <Image
+                src="/renthive-logo.jpg"
+                width={40}
+                height={40}
+                alt="hero-image"
+                className="w-full h-full object-cover rounded-lg"
+              />
             </div>
-            <span className="font-heading text-xl font-bold text-brand-primary">RentHive</span>
+            <span className="font-heading text-xl font-bold text-black">RentHive</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -36,14 +42,19 @@ export function Header() {
             </Link>
           </nav>
 
-          {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" asChild>
-              <Link href="/login">Login</Link>
-            </Button>
-            <Button asChild className="bg-brand-primary hover:bg-brand-primary/90">
-              <Link href="/register">Sign Up</Link>
-            </Button>
+            <Link
+              href="/login"
+              className="text-sm font-medium text-gray-700 hover:text-brand-primary transition-colors duration-200"
+            >
+              Login
+            </Link>
+            <Link
+              href="/register"
+              className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-brand-primary hover:bg-brand-primary/90 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md"
+            >
+              Sign Up
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -85,12 +96,20 @@ export function Header() {
                 Contact
               </Link>
               <div className="flex flex-col space-y-2 pt-4 border-t">
-                <Button variant="ghost" asChild>
-                  <Link href="/login">Login</Link>
-                </Button>
-                <Button asChild className="bg-brand-primary hover:bg-brand-primary/90">
-                  <Link href="/register">Sign Up</Link>
-                </Button>
+                <Link
+                  href="/login"
+                  className="text-sm font-medium text-gray-700 hover:text-brand-primary transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/register"
+                  className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-brand-primary hover:bg-brand-primary/90 rounded-lg transition-all duration-200"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Sign Up
+                </Link>
               </div>
             </nav>
           </div>
