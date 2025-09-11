@@ -1,5 +1,6 @@
 import { MapPin, Star, Heart, Eye } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 const featuredProperties = [
   {
@@ -140,9 +141,9 @@ export function FeaturedProperties() {
         </div>
 
         <div className="text-center mt-12">
-          <button className="px-6 py-3 border border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white bg-transparent rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 transform hover:scale-105">
+          <Link href="/search" className="px-6 py-3 border border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white bg-transparent rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 transform hover:scale-105">
             View All Properties
-          </button>
+          </Link>
         </div>
       </div>
     </section>

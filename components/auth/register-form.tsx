@@ -1,103 +1,92 @@
 "use client"
 
 import type React from "react"
-
+import axios from "axios"
 import { useState } from "react"
-import { Eye, EyeOff, Mail, Lock, User, Phone, GraduationCap, ChevronDown } from "lucide-react"
+import { useForm } from "react-hook-form"
+import { Eye, EyeOff, Mail, Lock, User, Phone } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+
+type RegisterFormData = {
+  name: string
+  email: string
+  phone: string
+  password: string
+  confirmPassword: string
+  role: string
+  agreeTerms: boolean
+}
 
 export function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [userType, setUserType] = useState("")
-  const [showDropdown, setShowDropdown] = useState(false)
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    password: "",
-    confirmPassword: "",
-    college: "",
-  })
-  const [agreeTerms, setAgreeTerms] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
-  }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<RegisterFormData>({
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+      confirmPassword: "",
+      role: "student",
+      agreeTerms: false,
+    },
+  })
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (formData.password !== formData.confirmPassword) {
+  const onSubmit = async (data: RegisterFormData) => {
+    if (data.password !== data.confirmPassword) {
       alert("Passwords don't match!")
       return
     }
-    if (!agreeTerms) {
+
+    if (!data.agreeTerms) {
       alert("Please agree to the terms and conditions")
       return
     }
 
-    setIsLoading(true)
-
-    // Simulate registration
-    setTimeout(() => {
-      setIsLoading(false)
-      router.push("/login")
-    }, 1000)
+    try {
+      const res = await axios.post("/api/auth/signup", data)
+      if (res.status === 201) {
+        alert("Signup successful! Now login.")
+        router.push("/login")
+      } else {
+        alert(res.data.error || "Something went wrong")
+      }
+    } catch (error: unknown) {
+      alert((error as Error).message || "Signup failed")
+    }
   }
-
-  const userTypeOptions = [
-    { value: "student", label: "Find PG/Flat (Student)" },
-    { value: "owner", label: "List My Property (Owner)" },
-  ]
 
   return (
     <div className="bg-white border-0 shadow-lg rounded-lg transition-all duration-300 hover:shadow-xl">
       <div className="p-8">
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* User Type Selection */}
           <div>
-            <label htmlFor="userType" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
               I want to
             </label>
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => setShowDropdown(!showDropdown)}
-                className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400"
+            <div className="relative mt-1">
+              <select
+                id="role"
+                {...register("role", { required: true })}
+                className="w-full pl-5 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400"
               >
-                <span className="block truncate">
-                  {userType ? userTypeOptions.find((opt) => opt.value === userType)?.label : "Select your purpose"}
-                </span>
-                <ChevronDown
-                  className={`absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 transition-transform duration-200 ${showDropdown ? "rotate-180" : ""}`}
-                />
-              </button>
-              {showDropdown && (
-                <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg transition-all duration-200 ease-in-out">
-                  {userTypeOptions.map((option) => (
-                    <button
-                      key={option.value}
-                      type="button"
-                      onClick={() => {
-                        setUserType(option.value)
-                        setShowDropdown(false)
-                      }}
-                      className="w-full px-3 py-2 text-left hover:bg-gray-50 focus:bg-gray-50 focus:outline-none transition-colors duration-150"
-                    >
-                      {option.label}
-                    </button>
-                  ))}
-                </div>
-              )}
+                <option value="student">Find PG/Flat (Student)</option>
+                <option value="owner">List My Property (Owner)</option>
+              </select>
             </div>
           </div>
 
           {/* Full Name */}
           <div>
-            <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
               Full Name
             </label>
             <div className="relative mt-1">
@@ -105,14 +94,13 @@ export function RegisterForm() {
                 <User className="h-5 w-5 text-gray-400" />
               </div>
               <input
-                id="fullName"
+                id="name"
                 type="text"
-                value={formData.fullName}
-                onChange={(e) => handleInputChange("fullName", e.target.value)}
+                {...register("name", { required: "Full name is required" })}
                 className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400"
                 placeholder="Enter your full name"
-                required
               />
+              {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
             </div>
           </div>
 
@@ -128,12 +116,17 @@ export function RegisterForm() {
               <input
                 id="email"
                 type="email"
-                value={formData.email}
-                onChange={(e) => handleInputChange("email", e.target.value)}
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Invalid email address",
+                  },
+                })}
                 className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400"
                 placeholder="Enter your email"
-                required
               />
+              {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
             </div>
           </div>
 
@@ -149,37 +142,13 @@ export function RegisterForm() {
               <input
                 id="phone"
                 type="tel"
-                value={formData.phone}
-                onChange={(e) => handleInputChange("phone", e.target.value)}
+                {...register("phone", { required: "Phone number is required" })}
                 className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400"
                 placeholder="+91-9876543210"
-                required
               />
+              {errors.phone && <p className="text-red-500 text-sm">{errors.phone.message}</p>}
             </div>
           </div>
-
-          {/* College (only for students) */}
-          {userType === "student" && (
-            <div>
-              <label htmlFor="college" className="block text-sm font-medium text-gray-700 mb-1">
-                College/University
-              </label>
-              <div className="relative mt-1">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <GraduationCap className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  id="college"
-                  type="text"
-                  value={formData.college}
-                  onChange={(e) => handleInputChange("college", e.target.value)}
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400"
-                  placeholder="e.g., IIT Delhi, DU, etc."
-                  required
-                />
-              </div>
-            </div>
-          )}
 
           {/* Password */}
           <div>
@@ -193,23 +162,18 @@ export function RegisterForm() {
               <input
                 id="password"
                 type={showPassword ? "text" : "password"}
-                value={formData.password}
-                onChange={(e) => handleInputChange("password", e.target.value)}
+                {...register("password", { required: "Password is required", minLength: 6 })}
                 className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400"
                 placeholder="Create a strong password"
-                required
               />
               <button
                 type="button"
                 className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-gray-600 transition-colors duration-200"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? (
-                  <EyeOff className="h-5 w-5 text-gray-400" />
-                ) : (
-                  <Eye className="h-5 w-5 text-gray-400" />
-                )}
+                {showPassword ? <EyeOff className="h-5 w-5 text-gray-400" /> : <Eye className="h-5 w-5 text-gray-400" />}
               </button>
+              {errors.password && <p className="text-red-500 text-sm">{errors.password.message as string}</p>}
             </div>
           </div>
 
@@ -225,23 +189,20 @@ export function RegisterForm() {
               <input
                 id="confirmPassword"
                 type={showConfirmPassword ? "text" : "password"}
-                value={formData.confirmPassword}
-                onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+                {...register("confirmPassword", { required: "Please confirm your password" })}
                 className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400"
                 placeholder="Confirm your password"
-                required
               />
               <button
                 type="button"
                 className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-gray-600 transition-colors duration-200"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
-                {showConfirmPassword ? (
-                  <EyeOff className="h-5 w-5 text-gray-400" />
-                ) : (
-                  <Eye className="h-5 w-5 text-gray-400" />
-                )}
+                {showConfirmPassword ? <EyeOff className="h-5 w-5 text-gray-400" /> : <Eye className="h-5 w-5 text-gray-400" />}
               </button>
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-sm">{errors.confirmPassword.message as string}</p>
+              )}
             </div>
           </div>
 
@@ -250,8 +211,7 @@ export function RegisterForm() {
             <input
               id="terms"
               type="checkbox"
-              checked={agreeTerms}
-              onChange={(e) => setAgreeTerms(e.target.checked)}
+              {...register("agreeTerms", { required: true })}
               className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 transition-colors duration-200 mt-1"
             />
             <label htmlFor="terms" className="text-sm leading-relaxed text-gray-700">
@@ -265,14 +225,15 @@ export function RegisterForm() {
               </Link>
             </label>
           </div>
+          {errors.agreeTerms && <p className="text-red-500 text-sm">You must agree to continue</p>}
 
           {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium py-2 px-4 rounded-md transition-all duration-200 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            disabled={isLoading}
+            disabled={isSubmitting}
           >
-            {isLoading ? "Creating account..." : "Create Account"}
+            {isSubmitting ? "Creating account..." : "Create Account"}
           </button>
         </form>
       </div>

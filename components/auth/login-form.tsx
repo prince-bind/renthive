@@ -1,91 +1,53 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
+import { useState } from "react";
+import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { signIn } from "next-auth/react";
 
-import { useState } from "react"
-import { Eye, EyeOff, Mail, Lock, ChevronDown } from "lucide-react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
+type LoginFormInputs = {
+  email: string;
+  password: string
+};
 
 export function LoginForm() {
-  const [showPassword, setShowPassword] = useState(false)
-  const [userType, setUserType] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [rememberMe, setRememberMe] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [showDropdown, setShowDropdown] = useState(false)
-  const router = useRouter()
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormInputs>();
 
-    // Simulate authentication
-    setTimeout(() => {
-      setIsLoading(false)
-      // Redirect based on user type
-      if (userType === "admin") {
-        router.push("/admin")
-      } else if (userType === "owner") {
-        router.push("/owner")
-      } else {
-        router.push("/")
-      }
-    }, 1000)
-  }
+  const onSubmit = async (data: LoginFormInputs) => {
+    setIsLoading(true);
 
-  const userTypeOptions = [
-    { value: "student", label: "Student" },
-    { value: "owner", label: "Property Owner" },
-    { value: "admin", label: "Admin" },
-  ]
+    const res = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect: false
+    })
+
+    if (res?.url) {
+      router.replace('/')
+    }
+  };
 
   return (
     <div className="bg-white border-0 shadow-lg rounded-lg transition-all duration-300 hover:shadow-xl">
       <div className="p-8">
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* User Type Selection */}
-          <div>
-            <label htmlFor="userType" className="block text-sm font-medium text-gray-700 mb-1">
-              I am a
-            </label>
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => setShowDropdown(!showDropdown)}
-                className="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400"
-              >
-                <span className="block truncate">
-                  {userType ? userTypeOptions.find((opt) => opt.value === userType)?.label : "Select your role"}
-                </span>
-                <ChevronDown
-                  className={`absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 transition-transform duration-200 ${showDropdown ? "rotate-180" : ""}`}
-                />
-              </button>
-              {showDropdown && (
-                <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg transition-all duration-200 ease-in-out">
-                  {userTypeOptions.map((option) => (
-                    <button
-                      key={option.value}
-                      type="button"
-                      onClick={() => {
-                        setUserType(option.value)
-                        setShowDropdown(false)
-                      }}
-                      className="w-full px-3 py-2 text-left hover:bg-gray-50 focus:bg-gray-50 focus:outline-none transition-colors duration-150"
-                    >
-                      {option.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* Email */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Email address
             </label>
             <div className="relative mt-1">
@@ -95,18 +57,28 @@ export function LoginForm() {
               <input
                 id="email"
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Invalid email address",
+                  },
+                })}
                 className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400"
                 placeholder="Enter your email"
-                required
               />
             </div>
+            {errors.email && (
+              <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+            )}
           </div>
 
           {/* Password */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Password
             </label>
             <div className="relative mt-1">
@@ -116,11 +88,15 @@ export function LoginForm() {
               <input
                 id="password"
                 type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                  },
+                })}
                 className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 hover:border-gray-400"
                 placeholder="Enter your password"
-                required
               />
               <button
                 type="button"
@@ -134,22 +110,15 @@ export function LoginForm() {
                 )}
               </button>
             </div>
+            {errors.password && (
+              <p className="mt-1 text-sm text-red-600">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           {/* Remember Me & Forgot Password */}
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <input
-                id="remember"
-                type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 transition-colors duration-200"
-              />
-              <label htmlFor="remember" className="text-sm text-gray-700">
-                Remember me
-              </label>
-            </div>
             <Link
               href="/forgot-password"
               className="text-sm text-blue-600 hover:text-blue-500 transition-colors duration-200"
@@ -169,5 +138,5 @@ export function LoginForm() {
         </form>
       </div>
     </div>
-  )
+  );
 }
