@@ -174,7 +174,7 @@ export default function AboutPage() {
       </section>
 
       {/* Team */}
-      <section className="py-16 bg-white">
+      {/* <section className="py-16 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="font-bold text-3xl text-gray-900 mb-4">Meet Our Team</h2>
@@ -185,11 +185,6 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="text-center transform transition-all duration-300 hover:scale-105 hover:-translate-y-2">
-              {/* <img
-                src="/prince.jpg"
-                alt="Founder"
-                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover transition-all duration-300 hover:shadow-lg hover:scale-110"
-              /> */}
               <Image
                 src="/prince.jpg"
                 width={128}
@@ -239,7 +234,7 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA */}
       <section className="py-16 bg-gradient-to-r from-blue-600 to-teal-600 transition-all duration-500">

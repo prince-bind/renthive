@@ -46,7 +46,7 @@ const propertySchema = new Schema(
     type: { type: String, enum: ["pg", "flat"], default: "pg" },
     title: { type: String, required: true },
     description: { type: String, required: true },
-    college: { type: String, required: true },
+    college: [{ type: String, required: true }],
     address: { type: String, required: true },
     city: { type: String, required: true },
     state: { type: String, required: true },

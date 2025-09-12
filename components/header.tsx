@@ -78,7 +78,6 @@ export function Header() {
                 </Link>
               </div>
             )}
-
           </div>
 
           {/* Mobile Menu Button */}
@@ -120,20 +119,32 @@ export function Header() {
                 Contact
               </Link>
               <div className="flex flex-col space-y-2 pt-4 border-t">
-                <Link
-                  href="/login"
-                  className="text-sm font-medium text-gray-700 hover:text-brand-primary transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/register"
-                  className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-brand-primary hover:bg-brand-primary/90 rounded-lg transition-all duration-200"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Sign Up
-                </Link>
+                {session ? (
+                  <div className="flex flex-col space-y-2">
+                    <span className='font-semibold'>Hey, {user.name}</span>
+                    <button
+                      onClick={() => signOut()}
+                      className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-brand-primary hover:bg-brand-primary/90 rounded-lg transition-all duration-200"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex flex-col space-y-2">
+                    <Link
+                      href="/login"
+                      className="text-sm font-medium text-gray-700 hover:text-brand-primary transition-colors"
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      href="/register"
+                      className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-brand-primary hover:bg-brand-primary/90 rounded-lg transition-all duration-200"
+                    >
+                      Sign Up
+                    </Link>
+                  </div>
+                )}
               </div>
             </nav>
           </div>
