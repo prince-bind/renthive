@@ -1,10 +1,31 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Header } from "@/components/header"
 import { SearchFilters } from "@/components/search/SearchFilters"
 import { SearchResults } from "@/components/search/SearchResults"
-import propertiesData from "@/components/search/properties.json"
+import { Property } from "@/types/property-type"
+
+// interface Property {
+//   _id: string
+//   type: string
+//   title: string
+//   description: string
+//   gender: string
+//   college: string[]
+//   address?: string
+//   city?: string
+//   state?: string
+//   zipCode: string
+//   location: string
+//   price: number
+//   amenities: string[]
+//   images: string[]
+//   occupancy: string
+//   furnished: boolean
+//   occupied: boolean
+//   createdAt: string
+// }
 
 interface SearchParams {
   location: string
@@ -14,10 +35,27 @@ interface SearchParams {
 }
 
 export default function HomePage() {
-  const [filteredProperties, setFilteredProperties] = useState(propertiesData)
+  const [properties, setProperties] = useState<Property[]>([])
+  const [filteredProperties, setFilteredProperties] = useState<Property[]>([])
+
+  // Fetch properties from DB
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const res = await fetch("/api/properties/show-properties")
+        const data = await res.json()
+        setProperties(data.data)
+        setFilteredProperties(data.data)
+      } catch (err) {
+        console.error("Error fetching properties:", err)
+      }
+    }
+
+    fetchProperties()
+  }, [])
 
   const handleSearch = (params: SearchParams) => {
-    let results = propertiesData
+    let results = properties
 
     // Location filter
     if (params.location && params.location.trim() !== "") {

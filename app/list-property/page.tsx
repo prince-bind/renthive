@@ -1,8 +1,15 @@
 import React from 'react'
+import { Header } from '@/components/header'
+import PropertyForm from '@/components/property/PropertyForm'
 
 const page = () => {
   return (
-    <div>list property page</div>
+    <>
+      <Header />
+      <div className='bg-gray-50 py-6'>
+        <PropertyForm />
+      </div>
+    </>
   )
 }
 

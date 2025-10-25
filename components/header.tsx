@@ -4,7 +4,6 @@ import { useState } from "react"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
 import Image from "next/image"
-import { usePathname } from 'next/navigation';
 
 import { useSession, signOut } from 'next-auth/react';
 import { User } from 'next-auth';
@@ -15,14 +14,6 @@ export function Header() {
   const user: User = session?.user as User;
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-
-  const currentPath = usePathname();
-  const links = [
-    { label: "Find PG/Flats", href: '/search' },
-    { label: "List Your Property", href: '/list-property' },
-    { label: "About", href: '/about' },
-    { label: "Contact", href: '/contact' }
-  ]
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -44,16 +35,25 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            {links.map(link => (
-              <Link key={link.href} href={link.href} className={`${link.href === currentPath ? 'text-slate-950' : 'text-slate-600'} text-md font-medium hover:text-brand-primary transition-colors`}>
-                {link.label}
+            <Link href='/search' className="text-slate-600 active:text-slate-950 text-md font-medium hover:text-brand-primary transition-colors">
+              Find PG/Flats
+            </Link>
+            {user && user.role === 'owner' &&
+              <Link href='/list-property' className="text-slate-600 active:text-slate-950 text-md font-medium hover:text-brand-primary transition-colors">
+                List Your Property
               </Link>
-            ))}
+            }
+            <Link href='/about' className="text-slate-600 active:text-slate-950 text-md font-medium hover:text-brand-primary transition-colors">
+              About
+            </Link>
+            <Link href='/contact' className="text-slate-600 active:text-slate-950 text-md font-medium hover:text-brand-primary transition-colors">
+              Contact
+            </Link>
           </nav>
 
           <div className="hidden md:flex items-center space-x-4">
             {session ? (
-              <div className="gap-4 flex items-center">
+              <Link href={'/profile'} className="gap-4 flex items-center">
                 <span className='font-semibold'>Hey, {user.name}</span>
                 <button
                   onClick={() => signOut()}
@@ -61,7 +61,7 @@ export function Header() {
                 >
                   Logout
                 </button>
-              </div>
+              </Link>
             ) : (
               <div className="gap-4 flex items-center">
                 <Link
@@ -97,13 +97,22 @@ export function Header() {
               >
                 Find PG/Flats
               </Link>
-              <Link
+              {user && user.role === 'owner' &&
+                <Link
+                  href="/list-property"
+                  className="text-sm font-medium hover:text-brand-primary transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  List Your Property
+                </Link>
+              }
+              {/* <Link
                 href="/list-property"
                 className="text-sm font-medium hover:text-brand-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 List Your Property
-              </Link>
+              </Link> */}
               <Link
                 href="/about"
                 className="text-sm font-medium hover:text-brand-primary transition-colors"
