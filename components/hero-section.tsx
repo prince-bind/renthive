@@ -51,7 +51,7 @@ export function HeroSection() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
               <Link
-                href="/list-property"
+                href="/profile"
                 className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-brand-primary bg-transparent border border-brand-primary hover:bg-brand-primary hover:text-white rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 transform hover:scale-105"
               >
                 List Your Property

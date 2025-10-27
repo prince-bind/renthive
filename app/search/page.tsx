@@ -5,27 +5,7 @@ import { Header } from "@/components/header"
 import { SearchFilters } from "@/components/search/SearchFilters"
 import { SearchResults } from "@/components/search/SearchResults"
 import { Property } from "@/types/property-type"
-
-// interface Property {
-//   _id: string
-//   type: string
-//   title: string
-//   description: string
-//   gender: string
-//   college: string[]
-//   address?: string
-//   city?: string
-//   state?: string
-//   zipCode: string
-//   location: string
-//   price: number
-//   amenities: string[]
-//   images: string[]
-//   occupancy: string
-//   furnished: boolean
-//   occupied: boolean
-//   createdAt: string
-// }
+import { Database } from "lucide-react"
 
 interface SearchParams {
   location: string
@@ -37,6 +17,7 @@ interface SearchParams {
 export default function HomePage() {
   const [properties, setProperties] = useState<Property[]>([])
   const [filteredProperties, setFilteredProperties] = useState<Property[]>([])
+  const [fetching, setfetching] = useState<boolean>(true)
 
   // Fetch properties from DB
   useEffect(() => {
@@ -52,6 +33,7 @@ export default function HomePage() {
     }
 
     fetchProperties()
+    setfetching(false)
   }, [])
 
   const handleSearch = (params: SearchParams) => {
@@ -108,9 +90,17 @@ export default function HomePage() {
         </div>
 
         {/* Property results */}
-        <div className="w-full lg:w-2/3 mb-10">
-          <SearchResults properties={filteredProperties} />
-        </div>
+        {fetching ? (
+          <div className="w-full lg:w-2/3 mb-10 flex items-center justify-center">
+            <Database size={48} className="animate-spin m-4" />
+            <p>Loading properties...</p>
+          </div>
+        ) : (
+          <div className="w-full lg:w-2/3 mb-10">
+            <SearchResults properties={filteredProperties} />
+          </div>
+        )
+        }
       </div>
     </>
   )

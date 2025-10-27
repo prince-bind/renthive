@@ -36,6 +36,10 @@ export function LoginForm() {
     if (res?.url) {
       router.replace('/')
     }
+    if (res?.error) {
+      alert(res.error)
+      setIsLoading(false);
+    }
   };
 
   return (

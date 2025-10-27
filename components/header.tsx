@@ -38,11 +38,11 @@ export function Header() {
             <Link href='/search' className="text-slate-600 active:text-slate-950 text-md font-medium hover:text-brand-primary transition-colors">
               Find PG/Flats
             </Link>
-            {user && user.role === 'owner' &&
+            {/* {user && user.role === 'owner' &&
               <Link href='/list-property' className="text-slate-600 active:text-slate-950 text-md font-medium hover:text-brand-primary transition-colors">
                 List Your Property
               </Link>
-            }
+            } */}
             <Link href='/about' className="text-slate-600 active:text-slate-950 text-md font-medium hover:text-brand-primary transition-colors">
               About
             </Link>
@@ -97,7 +97,7 @@ export function Header() {
               >
                 Find PG/Flats
               </Link>
-              {user && user.role === 'owner' &&
+              {/* {user && user.role === 'owner' &&
                 <Link
                   href="/list-property"
                   className="text-sm font-medium hover:text-brand-primary transition-colors"
@@ -105,14 +105,7 @@ export function Header() {
                 >
                   List Your Property
                 </Link>
-              }
-              {/* <Link
-                href="/list-property"
-                className="text-sm font-medium hover:text-brand-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                List Your Property
-              </Link> */}
+              } */}
               <Link
                 href="/about"
                 className="text-sm font-medium hover:text-brand-primary transition-colors"
