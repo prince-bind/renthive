@@ -3,133 +3,123 @@ import { Mail, Phone, MapPin, Clock, MessageCircle, Globe } from "lucide-react"
 export default function ContactInfo() {
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
-        <div className="p-6">
-          <div className="flex items-start space-x-4">
-            <div className="shrink-0">
-              <Mail className="h-6 w-6 text-blue-600" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-lg text-gray-900 mb-1">Email Us</h3>
-              <p className="text-gray-600 mb-2">Get in touch via email</p>
-              <div className="space-y-1">
-                <p className="text-sm">
-                  <span className="font-medium">General:</span> renthive@gmail.com
-                </p>
-                {/* <p className="text-sm">
-                  <span className="font-medium">Property Owners:</span> owners@pgfinder.com
-                </p>
-                <p className="text-sm">
-                  <span className="font-medium">Partnerships:</span> partnerships@pgfinder.com
-                </p> */}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
-        <div className="p-6">
-          <div className="flex items-start space-x-4">
-            <div className="shrink-0">
-              <Phone className="h-6 w-6 text-blue-600" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-lg text-gray-900 mb-1">Call Us</h3>
-              <p className="text-gray-600 mb-2">Speak directly with our team</p>
-              <div className="space-y-1">
-                <p className="text-sm">
-                  <span className="font-medium">Support:</span> +91 9876543210
-                </p>
-                <p className="text-sm">
-                  <span className="font-medium">Emergency:</span> +91 9876543211
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Email */}
+      <InfoCard
+        icon={<Mail className="h-5 w-5 text-[#3E568C]" />}
+        title="Email Us"
+        subtitle="Get in touch via email"
+      >
+        <p className="text-sm">
+          <span className="font-medium">General:</span> renthive@gmail.com
+        </p>
+      </InfoCard>
 
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
-        <div className="p-6">
-          <div className="flex items-start space-x-4">
-            <div className="shrink-0">
-              <MapPin className="h-6 w-6 text-blue-600" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-lg text-gray-900 mb-1">Visit Us</h3>
-              <p className="text-gray-600 mb-2">Our headquarters</p>
-              <p className="text-sm">
-                RentHive Technologies Pvt. Ltd.
-                <br />
-                DTU, Shahbad daulatpur
-                <br />
-                Delhi - 110042
-                <br />
-                India
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Phone */}
+      <InfoCard
+        icon={<Phone className="h-5 w-5 text-[#3E568C]" />}
+        title="Call Us"
+        subtitle="Speak directly with our team"
+      >
+        <p className="text-sm">
+          <span className="font-medium">Support:</span> +91 9876543210
+        </p>
+        <p className="text-sm">
+          <span className="font-medium">Emergency:</span> +91 9876543211
+        </p>
+      </InfoCard>
 
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
-        <div className="p-6">
-          <div className="flex items-start space-x-4">
-            <div className="shrink-0">
-              <Clock className="h-6 w-6 text-blue-600" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-lg text-gray-900 mb-1">Business Hours</h3>
-              <p className="text-gray-600 mb-2">When we&apos;re available</p>
-              <div className="space-y-1 text-sm">
-                <p>
-                  <span className="font-medium">Monday - Friday:</span> 9:00 AM - 7:00 PM
-                </p>
-                <p>
-                  <span className="font-medium">Saturday:</span> 10:00 AM - 5:00 PM
-                </p>
-                <p>
-                  <span className="font-medium">Sunday:</span> Closed
-                </p>
-                <p className="text-blue-600 font-medium mt-2">24/7 Emergency Support Available</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Address */}
+      <InfoCard
+        icon={<MapPin className="h-5 w-5 text-[#3E568C]" />}
+        title="Visit Us"
+        subtitle="Our headquarters"
+      >
+        <p className="text-sm leading-relaxed">
+          RentHive Technologies Pvt. Ltd.
+          <br />
+          DTU, Shahbad Daulatpur
+          <br />
+          Delhi – 110042
+          <br />
+          India
+        </p>
+      </InfoCard>
 
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
-        <div className="p-6">
-          <div className="flex items-start space-x-4">
-            <div className="shrink-0">
-              <MessageCircle className="h-6 w-6 text-blue-600" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-lg text-gray-900 mb-1">Live Chat</h3>
-              <p className="text-gray-600 mb-2">Get instant help</p>
-              <p className="text-sm">Available on our website during business hours for immediate assistance.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Hours */}
+      <InfoCard
+        icon={<Clock className="h-5 w-5 text-[#3E568C]" />}
+        title="Business Hours"
+        subtitle="When we&apos;re available"
+      >
+        <p className="text-sm">
+          <span className="font-medium">Mon – Fri:</span> 9:00 AM – 7:00 PM
+        </p>
+        <p className="text-sm">
+          <span className="font-medium">Saturday:</span> 10:00 AM – 5:00 PM
+        </p>
+        <p className="text-sm">
+          <span className="font-medium">Sunday:</span> Closed
+        </p>
+        <p className="mt-2 text-sm font-medium text-[#3E568C]">
+          24/7 Emergency Support Available
+        </p>
+      </InfoCard>
 
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
-        <div className="p-6">
-          <div className="flex items-start space-x-4">
-            <div className="shrink-0">
-              <Globe className="h-6 w-6 text-blue-600" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-lg text-gray-900 mb-1">Social Media</h3>
-              <p className="text-gray-600 mb-2">Connect with us online</p>
-              <div className="space-y-1 text-sm">
-                <p>Follow us for updates and tips</p>
-                <div className="flex space-x-4 mt-2">
-                  <span className="text-blue-600">@RentHive</span>
-                </div>
-              </div>
-            </div>
+      {/* Live Chat */}
+      <InfoCard
+        icon={<MessageCircle className="h-5 w-5 text-[#3E568C]" />}
+        title="Live Chat"
+        subtitle="Get instant help"
+      >
+        <p className="text-sm">
+          Available on our website during business hours for immediate assistance.
+        </p>
+      </InfoCard>
+
+      {/* Social */}
+      <InfoCard
+        icon={<Globe className="h-5 w-5 text-[#3E568C]" />}
+        title="Social Media"
+        subtitle="Connect with us online"
+      >
+        <p className="text-sm">Follow us for updates and tips</p>
+        <p className="mt-2 text-sm font-medium text-[#3E568C]">@RentHive</p>
+      </InfoCard>
+    </div>
+  )
+}
+
+/* Reusable Card */
+function InfoCard({
+  icon,
+  title,
+  subtitle,
+  children,
+}: {
+  icon: React.ReactNode
+  title: string
+  subtitle: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm
+                    hover:shadow-md hover:-translate-y-0.5 transition-all">
+      <div className="p-6 flex items-start gap-4">
+        <div className="shrink-0 w-10 h-10 rounded-full bg-[#3E568C]/10
+                        flex items-center justify-center">
+          {icon}
+        </div>
+
+        <div>
+          <h3 className="font-semibold text-lg text-slate-900">
+            {title}
+          </h3>
+          <p className="text-slate-600 mb-2">
+            {subtitle}
+          </p>
+          <div className="text-slate-600 space-y-1">
+            {children}
           </div>
         </div>
       </div>

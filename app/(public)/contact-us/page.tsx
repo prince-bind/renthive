@@ -5,19 +5,23 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
       {/* Hero Section */}
-      <section className="bg-linear-to-br from-blue-600 to-teal-600 py-16 transition-all duration-500 ease-in-out">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-white mb-4 md:text-5xl tracking-tight">
-              Get in Touch
-            </h1>
-            <p className="max-w-2xl mx-auto text-xl text-blue-100">
-              Have questions? We&apos;re here to help you find the perfect accommodation or assist with your property
-              listing.
-            </p>
-          </div>
+      <section
+        className="py-20"
+        style={{
+          background: "linear-gradient(135deg, #3E568C 0%, #4C6AA3 50%, #5A7DB8 100%)",
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
+            Get in Touch
+          </h1>
+          <p className="max-w-2xl mx-auto text-lg md:text-xl text-blue-100">
+            Have questions? We&apos;re here to help you find the perfect accommodation
+            or assist with your property listing.
+          </p>
         </div>
       </section>
+
 
       {/* Contact Section */}
       <section className="py-16">
