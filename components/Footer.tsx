@@ -1,151 +1,93 @@
-import Link from "next/link"
-import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from "lucide-react"
-import Image from "next/image"
+import Link from "next/link";
 
-export function Footer() {
+export default function Footer() {
   return (
-    // Applied Dark Charcoal background (#1A1A1A) matching the logo's dark grey
-    <footer className="bg-[#1A1A1A] text-[#F2F0EB] border-t border-[#C0A06A]/20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          
+    <footer className="bg-slate-900 border-t border-slate-800 text-slate-300">
+      <div className="mx-auto max-w-7xl px-6 py-16">
+
+        {/* Top Section */}
+        <div className="grid gap-12 md:grid-cols-4">
+
           {/* Brand */}
-          <div className="space-y-4">
-            <Link href="/" className="flex items-center space-x-2">
-              {/* Uncomment this section when you are ready to use the logo image */}
-              {/* <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-white/5">
-                <Image
-                  src="/renthive-logo.jpg"
-                  width={40}
-                  height={40}
-                  alt="RentHive Logo"
-                  className="w-full h-full object-cover rounded-lg"
-                />
-              </div> */}
-              <span className="font-heading text-2xl font-bold text-white">RentHive</span>
-            </Link>
-            <p className="text-gray-400 text-sm leading-relaxed">
-              Your trusted partner in finding the ideal PG and Flats.
+          <div className="md:col-span-2">
+            <div className="mb-4">
+              <span className="text-xl font-bold text-white">
+                RentHive
+              </span>
+            </div>
+            <p className="max-w-md text-slate-300">
+              A platform where PG & Flat owners list properties and college students find nearby accommodation easily.
             </p>
-            
-            {/* Social Icons - Updated hover color to Gold (#C0A06A) */}
-            <div className="flex space-x-4">
-              <Link href="#" className="text-gray-400 hover:text-[#C0A06A] transition-colors">
-                <Facebook className="h-5 w-5" />
+
+            {/* Social Icons */}
+            <div className="mt-6 flex items-center gap-4">
+              {/* LinkedIn */}
+              <Link
+                href="https://www.linkedin.com"
+                target="_blank"
+                aria-label="LinkedIn"
+                className="hover:text-[#3E568C] transition"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8h4V24h-4V8zM8.5 8h3.8v2.2h.05c.53-1 1.82-2.2 3.75-2.2 4 0 4.7 2.6 4.7 6V24h-4v-7.2c0-1.7 0-3.9-2.4-3.9s-2.8 1.8-2.8 3.8V24h-4V8z"/>
+                </svg>
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-[#C0A06A] transition-colors">
-                <Twitter className="h-5 w-5" />
-              </Link>
-              <Link href="#" className="text-gray-400 hover:text-[#C0A06A] transition-colors">
-                <Instagram className="h-5 w-5" />
-              </Link>
-              <Link href="#" className="text-gray-400 hover:text-[#C0A06A] transition-colors">
-                <Linkedin className="h-5 w-5" />
+
+              {/* GitHub */}
+              <Link
+                href="https://github.com"
+                target="_blank"
+                aria-label="GitHub"
+                className="hover:text-[#3E568C] transition"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 .1.7 2.1 2.7 1.5.1-.7.4-1.2.7-1.5-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.3 0 0 1-.3 3.3 1.2a11.3 11.3 0 016 0C17 5 18 5.3 18 5.3c.6 1.7.2 3 .1 3.3.8.8 1.2 1.9 1.2 3.2 0 4.5-2.7 5.5-5.3 5.8.4.3.8 1 .8 2.1v3.1c0 .3.2.7.8.6A11.5 11.5 0 0023.5 12C23.5 5.7 18.3.5 12 .5z"/>
+                </svg>
               </Link>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Product */}
           <div>
-            <h3 className="font-semibold text-lg mb-4 text-[#F2F0EB]">Quick Links</h3>
+            <h4 className="text-white font-semibold mb-4">Product</h4>
             <ul className="space-y-2">
-              <li>
-                <Link href="/search" className="text-gray-400 hover:text-[#C0A06A] transition-colors">
-                  Find PG/Flats
-                </Link>
-              </li>
-              <li>
-                <Link href="/list-property" className="text-gray-400 hover:text-[#C0A06A] transition-colors">
-                  List Property
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-gray-400 hover:text-[#C0A06A] transition-colors">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-gray-400 hover:text-[#C0A06A] transition-colors">
-                  Contact
-                </Link>
-              </li>
+              <li><Link href="/features" className="hover:text-white transition">Features</Link></li>
+              <li><Link href="/pricing" className="hover:text-white transition">Pricing</Link></li>
+              <li><Link href="/dashboard" className="hover:text-white transition">Dashboard</Link></li>
             </ul>
           </div>
 
-          {/* For Students */}
+          {/* Company */}
           <div>
-            <h3 className="font-semibold text-lg mb-4 text-[#F2F0EB]">For Students</h3>
+            <h4 className="text-white font-semibold mb-4">Company</h4>
             <ul className="space-y-2">
-              <li>
-                <Link href="/how-it-works" className="text-gray-400 hover:text-[#C0A06A] transition-colors">
-                  How It Works
-                </Link>
-              </li>
-              <li>
-                <Link href="/safety-tips" className="text-gray-400 hover:text-[#C0A06A] transition-colors">
-                  Safety Tips
-                </Link>
-              </li>
-              <li>
-                <Link href="/student-guide" className="text-gray-400 hover:text-[#C0A06A] transition-colors">
-                  Student Guide
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="text-gray-400 hover:text-[#C0A06A] transition-colors">
-                  FAQ
-                </Link>
-              </li>
-              <li>
-                <Link href="/support" className="text-gray-400 hover:text-[#C0A06A] transition-colors">
-                  Support
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact Info - Icons updated to Gold (#C0A06A) */}
-          <div>
-            <h3 className="font-semibold text-lg mb-4 text-[#F2F0EB]">Contact Info</h3>
-            <ul className="space-y-3">
-              <li className="flex items-center space-x-3">
-                <Mail className="h-4 w-4 text-[#C0A06A]" />
-                <span className="text-gray-400 text-sm">support@renthive.com</span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <Phone className="h-4 w-4 text-[#C0A06A]" />
-                <span className="text-gray-400 text-sm">+91-9876543210</span>
-              </li>
-              <li className="flex items-start space-x-3">
-                <MapPin className="h-4 w-4 text-[#C0A06A] mt-0.5" />
-                <span className="text-gray-400 text-sm">
-                  DTU, Shahbad Daulatpur,
-                  <br />
-                  Delhi - 110042
-                </span>
-              </li>
+              <li><Link href="/about" className="hover:text-white transition">About</Link></li>
+              <li><Link href="/contact" className="hover:text-white transition">Contact</Link></li>
+              <li><Link href="/privacy-policy" className="hover:text-white transition">Privacy Policy</Link></li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-gray-800/50 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-500 text-sm">© 2025 RentHive. All rights reserved.</p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link href="/privacy" className="text-gray-500 hover:text-[#C0A06A] text-sm transition-colors">
-                Privacy Policy
-              </Link>
-              <Link href="/terms" className="text-gray-500 hover:text-[#C0A06A] text-sm transition-colors">
-                Terms of Service
-              </Link>
-              <Link href="/cookies" className="text-gray-500 hover:text-[#C0A06A] text-sm transition-colors">
-                Cookie Policy
-              </Link>
-            </div>
+        {/* Bottom Section */}
+        <div className="mt-12 pt-6 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
+          <p>© {new Date().getFullYear()} RentHive. All rights reserved.</p>
+          <div className="flex gap-4">
+            <Link href="/terms" className="hover:text-white transition">Terms</Link>
+            <Link href="/privacy-policy" className="hover:text-white transition">Privacy</Link>
           </div>
         </div>
+
       </div>
     </footer>
-  )
+  );
 }
