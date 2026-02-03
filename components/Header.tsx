@@ -55,7 +55,7 @@ export default function Navbar() {
       >
         <div className="px-6 pb-6 flex flex-col gap-4 text-slate-700">
           <Link href="/search" className="hover:text-[#3E568C] transition">Find PG/Flats</Link>
-          <Link href="/how-it-works" className="hover:text-[#3E568C] transition">How It Works</Link>
+          <Link href="#how-it-works" className="hover:text-[#3E568C] transition">How It Works</Link>
           <Link href="/contact-us" className="hover:text-[#3E568C] transition">Contact Us</Link>
 
           <Link href="/login" className="mt-2 px-6 py-2 rounded-full border border-[#3E568C] text-[#3E568C] hover:bg-[#E8EDFA] transition">

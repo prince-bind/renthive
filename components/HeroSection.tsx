@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Hero() {
   return (
@@ -19,12 +20,12 @@ export default function Hero() {
           </p>
 
           <div className="mt-8 flex flex-wrap gap-4">
-            <button className="px-8 py-3 rounded-full bg-[#3E568C] text-white font-semibold hover:bg-[#354B7A] hover:scale-105 transition">
+            <Link href="/search" className="px-8 py-3 rounded-full bg-[#3E568C] text-white font-semibold hover:bg-[#354B7A] hover:scale-105 transition">
               Find PG/Flats
-            </button>
-            <button className="px-8 py-3 rounded-full border border-slate-300 text-slate-700 font-semibold hover:bg-slate-100 hover:scale-105 transition">
+            </Link>
+            <Link href="/list-property" className="px-8 py-3 rounded-full border border-slate-300 text-slate-700 font-semibold hover:bg-slate-100 hover:scale-105 transition">
               List Your Property
-            </button>
+            </Link>
           </div>
         </div>
 
