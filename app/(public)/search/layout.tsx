@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import Filters from "@/components/search/Filters";
 import FiltersMobile from "@/components/search/FiltersMobile";
 import FiltersSkeleton from "@/components/search/FiltersSkeleton";
-import { getColleges } from "@/lib/getColleges";
+import { getColleges } from "@/actions/getColleges";
 
 export default async function SearchLayout({
   children,

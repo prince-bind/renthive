@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 type College = {
   id: string;
   name: string;
+  city: string; // ✅ Added city type
 };
 
 export default function Filters({
@@ -18,7 +19,7 @@ export default function Filters({
   const router = useRouter();
   const params = useSearchParams();
 
-  // --- state derived from URL ---
+  // --- State derived from URL ---
   const [city, setCity] = useState(params.get("city") || "");
   const [type, setType] = useState(params.get("type") || "");
   const [gender, setGender] = useState(params.get("gender") || "");
@@ -26,12 +27,12 @@ export default function Filters({
   const [rentMin, setRentMin] = useState(params.get("rentMin") || "");
   const [rentMax, setRentMax] = useState(params.get("rentMax") || "");
 
-  // --- college autocomplete ---
+  // --- College Autocomplete State ---
   const [collegeQuery, setCollegeQuery] = useState("");
   const [collegeId, setCollegeId] = useState(params.get("collegeId") || "");
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  // Sync college name from URL
+  // Sync college name from URL on load
   useEffect(() => {
     if (collegeId) {
       const selected = colleges.find((c) => c.id === collegeId);
@@ -92,11 +93,11 @@ export default function Filters({
           value={city}
           onChange={(e) => setCity(e.target.value)}
           placeholder="e.g. Noida"
-          className="mt-1 w-full border rounded-lg px-3 py-2 text-sm"
+          className="mt-1 w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#3E568C] focus:outline-none"
         />
       </div>
 
-      {/* College autocomplete */}
+      {/* College Autocomplete */}
       <div className="relative">
         <label className="text-sm font-medium">College</label>
         <input
@@ -107,12 +108,14 @@ export default function Filters({
             setShowSuggestions(true);
           }}
           onFocus={() => setShowSuggestions(true)}
+          // Close suggestions on blur (delayed to allow clicks)
+          onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
           placeholder="Type college name..."
-          className="mt-1 w-full border rounded-lg px-3 py-2 text-sm"
+          className="mt-1 w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#3E568C] focus:outline-none"
         />
 
         {showSuggestions && collegeQuery && (
-          <div className="absolute z-20 mt-1 w-full bg-white border rounded-lg shadow-sm max-h-48 overflow-y-auto">
+          <div className="absolute z-20 mt-1 w-full bg-white border rounded-lg shadow-lg max-h-48 overflow-y-auto">
             {filteredColleges.length ? (
               filteredColleges.map((college) => (
                 <button
@@ -122,9 +125,13 @@ export default function Filters({
                     setCollegeId(college.id);
                     setShowSuggestions(false);
                   }}
-                  className="w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
+                  className="w-full text-left px-3 py-2 text-sm hover:bg-gray-100 flex justify-between items-center"
                 >
-                  {college.name}
+                  <span className="font-medium truncate">{college.name}</span>
+                  {/* ✅ NEW: Show City Name */}
+                  <span className="text-xs text-gray-500 ml-2 whitespace-nowrap">
+                    {college.city}
+                  </span>
                 </button>
               ))
             ) : (
@@ -142,7 +149,7 @@ export default function Filters({
         <select
           value={type}
           onChange={(e) => setType(e.target.value)}
-          className="mt-1 w-full border rounded-lg px-3 py-2 text-sm"
+          className="mt-1 w-full border rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-[#3E568C] focus:outline-none"
         >
           <option value="">All</option>
           <option value="PG">PG</option>
@@ -156,7 +163,7 @@ export default function Filters({
         <select
           value={gender}
           onChange={(e) => setGender(e.target.value)}
-          className="mt-1 w-full border rounded-lg px-3 py-2 text-sm"
+          className="mt-1 w-full border rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-[#3E568C] focus:outline-none"
         >
           <option value="">Any</option>
           <option value="BOYS">Boys</option>
@@ -171,7 +178,7 @@ export default function Filters({
         <select
           value={occupancy}
           onChange={(e) => setOccupancy(e.target.value)}
-          className="mt-1 w-full border rounded-lg px-3 py-2 text-sm"
+          className="mt-1 w-full border rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-[#3E568C] focus:outline-none"
         >
           <option value="">Any</option>
           <option value="SINGLE">Single</option>
@@ -189,21 +196,21 @@ export default function Filters({
             placeholder="Min"
             value={rentMin}
             onChange={(e) => setRentMin(e.target.value)}
-            className="w-1/2 border rounded-lg px-2 py-2 text-sm"
+            className="w-1/2 border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#3E568C] focus:outline-none"
           />
           <input
             type="number"
             placeholder="Max"
             value={rentMax}
             onChange={(e) => setRentMax(e.target.value)}
-            className="w-1/2 border rounded-lg px-2 py-2 text-sm"
+            className="w-1/2 border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#3E568C] focus:outline-none"
           />
         </div>
       </div>
 
       <button
         onClick={applyFilters}
-        className="w-full bg-[#3E568C] hover:bg-[#334873] text-white py-2.5 rounded-lg text-sm font-medium transition"
+        className="w-full bg-[#3E568C] hover:bg-[#334873] text-white py-2.5 rounded-lg text-sm font-medium transition shadow-sm"
       >
         Apply Filters
       </button>

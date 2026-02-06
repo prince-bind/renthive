@@ -1,33 +1,42 @@
 import { prisma } from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
+import { Prisma, PropertyType, GenderType, OccupancyType } from "@prisma/client";
 
-type Filters = {
+export type SearchFilters = {
   city?: string;
   collegeId?: string;
-  type?: "PG" | "FLAT";
-  gender?: "BOYS" | "GIRLS" | "UNISEX";
-  occupancy?: "SINGLE" | "DOUBLE" | "TRIPLE";
+  type?: PropertyType;
+  gender?: GenderType;
+  occupancy?: OccupancyType;
   rentMin?: number;
   rentMax?: number;
   page?: number;
   pageSize?: number;
 };
 
-export async function searchProperties(filters: Filters) {
+export async function searchProperties(filters: SearchFilters) {
   const page = filters.page ?? 1;
   const pageSize = filters.pageSize ?? 6;
 
+  // Build the WHERE clause dynamically
   const where: Prisma.PropertyWhereInput = {
     isAvailable: true,
 
     city: filters.city
       ? {
           contains: filters.city,
-          mode: Prisma.QueryMode.insensitive, // ✅ FIX
+          mode: Prisma.QueryMode.insensitive,
         }
       : undefined,
 
-    collegeId: filters.collegeId || undefined,
+    // ✅ NEW: Filter properties where *at least one* connected college matches the ID
+    colleges: filters.collegeId
+      ? {
+          some: {
+            collegeId: filters.collegeId,
+          },
+        }
+      : undefined,
+
     type: filters.type,
     gender: filters.gender,
     occupancy: filters.occupancy,
@@ -46,7 +55,12 @@ export async function searchProperties(filters: Filters) {
       orderBy: { createdAt: "desc" },
       include: {
         images: true,
-        college: true,
+        // ✅ NEW: Include the join table, then the college details
+        colleges: {
+          include: {
+            college: true,
+          },
+        },
         owner: {
           select: { isVerified: true },
         },

@@ -5,6 +5,7 @@ export async function getColleges() {
     select: {
       id: true,
       name: true,
+      city: true, // ✅ Added city
     },
     orderBy: {
       name: "asc",

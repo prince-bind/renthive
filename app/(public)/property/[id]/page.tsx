@@ -1,4 +1,4 @@
-import { getPropertyById } from "@/lib/getPropertyById";
+import { getPropertyById } from "@/actions/getPropertyById";
 import PropertyGallery from "@/components/property/PropertyGallery";
 import PropertyInfo from "@/components/property/PropertyInfo";
 import BackToSearch from "@/components/property/BackToSearch";
@@ -9,9 +9,7 @@ export default async function PropertyDetailsPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  // ✅ unwrap params FIRST
   const { id } = await params;
-
   const property = await getPropertyById(id);
 
   if (!property) {
@@ -26,33 +24,36 @@ export default async function PropertyDetailsPage({
       <PropertyGallery images={property.images} />
 
       <div className="grid lg:grid-cols-3 gap-8">
-        {/* Left */}
+        {/* Left: Info */}
         <div className="lg:col-span-2">
           <PropertyInfo property={property} />
         </div>
 
-        {/* Right */}
-        <div className="border rounded-xl p-6 h-fit shadow-sm">
-          <p className="text-lg font-semibold text-blue-600">
-            ₹{property.rent}
-            <span className="text-sm text-gray-500">
+        {/* Right: Owner Card */}
+        <div className="border rounded-xl p-6 h-fit shadow-sm sticky top-6">
+          <p className="text-lg font-semibold text-[#3E568C]">
+            ₹{property.rent.toLocaleString()}
+            <span className="text-sm text-gray-500 font-normal">
               {" "}
               / {property.rentType === "PER_BED" ? "bed" : "room"}
             </span>
           </p>
 
-          <p className="mt-2 text-sm text-gray-600">
-            Owner: {property.owner.name}
-            {property.owner.isVerified && (
-              <span className="ml-2 text-green-600 text-xs font-medium">
-                ✔ Verified
-              </span>
-            )}
-          </p>
+          <div className="mt-4 pt-4 border-t">
+            <p className="text-sm text-gray-600">Owner details</p>
+            <p className="font-medium mt-1 flex items-center gap-2">
+              {property.owner.name}
+              {property.owner.isVerified && (
+                <span className="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full">
+                  ✔ Verified
+                </span>
+              )}
+            </p>
+          </div>
 
           <a
             href={`tel:${property.owner.phone}`}
-            className="mt-4 block w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-2.5 rounded-lg text-sm font-medium"
+            className="mt-6 block w-full bg-[#3E568C] hover:bg-[#334873] text-white text-center py-3 rounded-lg text-sm font-medium transition"
           >
             Call Owner
           </a>

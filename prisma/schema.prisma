@@ -46,19 +46,6 @@ model User {
   @@map("users")
 }
 
-model College {
-  id        String   @id @default(cuid())
-  name      String
-  city      String
-  state     String
-  createdAt DateTime @default(now())
-
-  properties Property[]
-
-  @@unique([name, city])
-  @@map("colleges")
-}
-
 enum PropertyType {
   PG
   FLAT
@@ -103,16 +90,52 @@ model Property {
   isAvailable Boolean       @default(true)
   createdAt   DateTime      @default(now())
 
-  ownerId   String
-  collegeId String
+  ownerId String
+  owner   User   @relation(fields: [ownerId], references: [id])
 
-  owner   User    @relation(fields: [ownerId], references: [id])
-  college College @relation(fields: [collegeId], references: [id])
+  colleges PropertyCollege[]
 
   amenities PropertyAmenity[]
   images    PropertyImage[]
 
   @@map("properties")
+}
+
+model College {
+  id        String   @id @default(cuid())
+  name      String
+  city      String
+  state     String
+  createdAt DateTime @default(now())
+
+  properties PropertyCollege[]
+
+  @@unique([name, city])
+  @@map("colleges")
+}
+
+model PropertyCollege {
+  propertyId String
+  collegeId  String
+
+  distanceKm Float?
+
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  college  College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+
+  @@id([propertyId, collegeId])
+  @@map("property_colleges")
+}
+
+model PropertyImage {
+  id         String   @id @default(cuid())
+  url        String
+  propertyId String
+  createdAt  DateTime @default(now())
+
+  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@map("property_images")
 }
 
 model Amenity {
@@ -134,15 +157,4 @@ model PropertyAmenity {
 
   @@id([propertyId, amenityId])
   @@map("property_amenities")
-}
-
-model PropertyImage {
-  id         String   @id @default(cuid())
-  url        String
-  propertyId String
-  createdAt  DateTime @default(now())
-
-  property Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
-
-  @@map("property_images")
 }
