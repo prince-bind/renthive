@@ -1,8 +1,31 @@
-import { getPropertyById } from "@/actions/getPropertyById";
 import PropertyGallery from "@/components/property/PropertyGallery";
 import PropertyInfo from "@/components/property/PropertyInfo";
 import BackToSearch from "@/components/property/BackToSearch";
 import { notFound } from "next/navigation";
+import { headers } from "next/headers";
+
+async function fetchProperty(id: string) {
+  const h = await headers();
+  const host = h.get("host");
+
+  if (!host) {
+    return null;
+  }
+
+  const protocol =
+    process.env.NODE_ENV === "development" ? "http" : "https";
+
+  const res = await fetch(
+    `${protocol}://${host}/api/property/${id}`,
+    { cache: "no-store" }
+  );
+
+  if (!res.ok) {
+    return null;
+  }
+
+  return res.json();
+}
 
 export default async function PropertyDetailsPage({
   params,
@@ -10,7 +33,8 @@ export default async function PropertyDetailsPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const property = await getPropertyById(id);
+
+  const property = await fetchProperty(id);
 
   if (!property) {
     notFound();

@@ -1,19 +1,20 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Pagination({
   currentPage,
   totalPages,
+  baseQuery,
 }: {
   currentPage: number;
   totalPages: number;
+  baseQuery: string;
 }) {
   const router = useRouter();
-  const params = useSearchParams();
 
   const goToPage = (page: number) => {
-    const q = new URLSearchParams(params.toString());
+    const q = new URLSearchParams(baseQuery);
     q.set("page", String(page));
     router.push(`/search?${q.toString()}`);
   };

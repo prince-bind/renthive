@@ -1,12 +1,40 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    const res = await signIn("credentials", {
+      email,
+      password,
+      redirect: false, // 🔥 IMPORTANT
+    });
+
+    setLoading(false);
+
+    if (res?.error) {
+      setError("Invalid email or password");
+      return;
+    }
+
+    // success
+    window.location.href = "/search";
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 relative overflow-hidden">
-
-      {/* Subtle grid background */}
+      {/* Background grid */}
       <div
         className="absolute inset-0"
         style={{
@@ -16,10 +44,9 @@ export default function LoginPage() {
         }}
       />
 
-      {/* Login Card */}
+      {/* Card */}
       <div className="relative z-10 w-full max-w-md bg-white rounded-2xl shadow-lg border border-slate-200 px-8 py-10">
-
-        {/* Logo / Brand */}
+        {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-[#1F2A44]">
             Rent<span className="text-[#3E568C]">Hive</span>
@@ -30,8 +57,7 @@ export default function LoginPage() {
         </div>
 
         {/* Form */}
-        <form className="space-y-5">
-
+        <form className="space-y-5" onSubmit={handleSubmit}>
           {/* Email */}
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">
@@ -39,8 +65,11 @@ export default function LoginPage() {
             </label>
             <input
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
               placeholder="johndoe@email.com"
-              className="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#3E568C]/40 focus:border-[#3E568C]"
+              className="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#3E568C]/40"
             />
           </div>
 
@@ -51,10 +80,20 @@ export default function LoginPage() {
             </label>
             <input
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
               placeholder="••••••••"
-              className="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#3E568C]/40 focus:border-[#3E568C]"
+              className="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#3E568C]/40"
             />
           </div>
+
+          {/* Error */}
+          {error && (
+            <p className="text-sm text-red-600 bg-red-50 px-3 py-2 rounded">
+              {error}
+            </p>
+          )}
 
           {/* Forgot */}
           <div className="text-right">
@@ -66,12 +105,13 @@ export default function LoginPage() {
             </Link>
           </div>
 
-          {/* Login Button */}
+          {/* Login button */}
           <button
             type="submit"
-            className="w-full py-3 rounded-lg bg-[#3E568C] hover:bg-[#354B7A] text-white font-semibold transition"
+            disabled={loading}
+            className="w-full py-3 rounded-lg bg-[#3E568C] hover:bg-[#354B7A] text-white font-semibold transition disabled:opacity-60"
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
 
           {/* Divider */}
@@ -81,40 +121,25 @@ export default function LoginPage() {
             <div className="h-px flex-1 bg-slate-200" />
           </div>
 
-          {/* Google Login */}
+          {/* Google (future-ready) */}
           <button
             type="button"
+            onClick={() => signIn("google", { callbackUrl: "/search" })}
             className="w-full py-2.5 rounded-lg border border-slate-300 flex items-center justify-center gap-2 hover:bg-slate-50 transition"
           >
-            <svg className="w-5 h-5" viewBox="0 0 48 48">
-              <path
-                fill="#FFC107"
-                d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.1 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"
-              />
-              <path
-                fill="#FF3D00"
-                d="M6.3 14.7l6.6 4.8C14.7 16.1 19 12 24 12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.1 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
-              />
-              <path
-                fill="#4CAF50"
-                d="M24 44c5.2 0 10-2 13.6-5.2l-6.3-5.2C29.3 35.8 26.8 36 24 36c-5.3 0-9.7-3.3-11.3-8H6.1v5.1C9.5 39.7 16.2 44 24 44z"
-              />
-              <path
-                fill="#1976D2"
-                d="M43.6 20.1H42V20H24v8h11.3c-1.1 2.9-3.1 5.3-5.7 6.9l6.3 5.2C39.8 36.7 44 31.3 44 24c0-1.3-.1-2.6-.4-3.9z"
-              />
-            </svg>
             <span className="text-sm font-medium text-slate-700">
-              Google Sign In
+              Continue with Google
             </span>
           </button>
-
         </form>
 
         {/* Register */}
         <p className="mt-6 text-center text-sm text-slate-500">
           Don’t have an account?{" "}
-          <Link href="/register" className="text-[#3E568C] font-medium hover:underline">
+          <Link
+            href="/register"
+            className="text-[#3E568C] font-medium hover:underline"
+          >
             Register here
           </Link>
         </p>

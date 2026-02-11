@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
+import { signIn } from "next-auth/react";
 
 export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
@@ -31,8 +32,9 @@ export default function RegisterPage() {
     return newErrors;
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
 
@@ -42,24 +44,90 @@ export default function RegisterPage() {
       return;
     }
 
+    if (!role) {
+      setErrors({ role: "Please select a role" });
+      return;
+    }
+
     setErrors({});
     setLoading(true);
 
-    const payload = {
-      name: data.name,
-      email: data.email,
-      phone: data.phone,
-      role,
-      password: data.password,
-    };
+    try {
+      // 1️⃣ Create user
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          password: data.password,
+          role,
+        }),
+      });
 
-    console.log("Register payload:", payload);
+      const result = await res.json();
 
-    setTimeout(() => {
+      if (!res.ok) {
+        setErrors({ form: result.error || "Something went wrong" });
+        setLoading(false);
+        return;
+      }
+
+      // 2️⃣ Auto login
+      const loginRes = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+      });
+
+      if (loginRes?.error) {
+        setErrors({ form: "Login failed after signup" });
+        setLoading(false);
+        return;
+      }
+
+      // 3️⃣ Redirect
+      if (role === "OWNER") {
+        window.location.href = "/owner/dashboard";
+      } else {
+        window.location.href = "/search";
+      }
+    } catch (err) {
+      setErrors({ form: "Server error. Try again later." });
       setLoading(false);
-      alert("Registered successfully!");
-    }, 1500);
+    }
   };
+
+  // const handleSubmit = (e: any) => {
+  //   e.preventDefault();
+  //   const formData = new FormData(e.target);
+  //   const data = Object.fromEntries(formData.entries());
+
+  //   const validationErrors = validate(data);
+  //   if (Object.keys(validationErrors).length > 0) {
+  //     setErrors(validationErrors);
+  //     return;
+  //   }
+
+  //   setErrors({});
+  //   setLoading(true);
+
+  //   const payload = {
+  //     name: data.name,
+  //     email: data.email,
+  //     phone: data.phone,
+  //     role,
+  //     password: data.password,
+  //   };
+
+  //   console.log("Register payload:", payload);
+
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //     alert("Registered successfully!");
+  //   }, 1500);
+  // };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 relative overflow-hidden">
@@ -131,9 +199,8 @@ export default function RegisterPage() {
             name="name"
             placeholder="Full Name"
             disabled={loading}
-            className={`w-full px-4 py-2.5 rounded-lg border ${
-              errors.name ? "border-red-500" : "border-slate-300"
-            } focus:outline-none focus:ring-2 focus:ring-[#3E568C]/40`}
+            className={`w-full px-4 py-2.5 rounded-lg border ${errors.name ? "border-red-500" : "border-slate-300"
+              } focus:outline-none focus:ring-2 focus:ring-[#3E568C]/40`}
           />
 
           {/* Email */}
@@ -142,9 +209,8 @@ export default function RegisterPage() {
             type="email"
             placeholder="Email"
             disabled={loading}
-            className={`w-full px-4 py-2.5 rounded-lg border ${
-              errors.email ? "border-red-500" : "border-slate-300"
-            } focus:outline-none focus:ring-2 focus:ring-[#3E568C]/40`}
+            className={`w-full px-4 py-2.5 rounded-lg border ${errors.email ? "border-red-500" : "border-slate-300"
+              } focus:outline-none focus:ring-2 focus:ring-[#3E568C]/40`}
           />
 
           {/* Phone */}
@@ -153,9 +219,8 @@ export default function RegisterPage() {
             type="tel"
             placeholder="Phone Number"
             disabled={loading}
-            className={`w-full px-4 py-2.5 rounded-lg border ${
-              errors.phone ? "border-red-500" : "border-slate-300"
-            } focus:outline-none focus:ring-2 focus:ring-[#3E568C]/40`}
+            className={`w-full px-4 py-2.5 rounded-lg border ${errors.phone ? "border-red-500" : "border-slate-300"
+              } focus:outline-none focus:ring-2 focus:ring-[#3E568C]/40`}
           />
 
           {/* Password */}
@@ -165,9 +230,8 @@ export default function RegisterPage() {
               type={showPassword ? "text" : "password"}
               placeholder="Password"
               disabled={loading}
-              className={`w-full px-4 py-2.5 pr-12 rounded-lg border ${
-                errors.password ? "border-red-500" : "border-slate-300"
-              } focus:outline-none focus:ring-2 focus:ring-[#3E568C]/40`}
+              className={`w-full px-4 py-2.5 pr-12 rounded-lg border ${errors.password ? "border-red-500" : "border-slate-300"
+                } focus:outline-none focus:ring-2 focus:ring-[#3E568C]/40`}
             />
             <button
               type="button"
@@ -185,9 +249,8 @@ export default function RegisterPage() {
               type={showConfirmPassword ? "text" : "password"}
               placeholder="Confirm Password"
               disabled={loading}
-              className={`w-full px-4 py-2.5 pr-12 rounded-lg border ${
-                errors.confirmPassword ? "border-red-500" : "border-slate-300"
-              } focus:outline-none focus:ring-2 focus:ring-[#3E568C]/40`}
+              className={`w-full px-4 py-2.5 pr-12 rounded-lg border ${errors.confirmPassword ? "border-red-500" : "border-slate-300"
+                } focus:outline-none focus:ring-2 focus:ring-[#3E568C]/40`}
             />
             <button
               type="button"
@@ -204,15 +267,20 @@ export default function RegisterPage() {
             </p>
           )}
 
+          {errors.form && (
+            <p className="text-sm text-red-600 bg-red-50 px-3 py-2 rounded">
+              {errors.form}
+            </p>
+          )}
+
           {/* Submit */}
           <button
             type="submit"
             disabled={loading}
             className={`w-full py-3 rounded-lg font-semibold text-white transition
-              ${
-                loading
-                  ? "bg-slate-400 cursor-not-allowed"
-                  : "bg-[#3E568C] hover:bg-[#354B7A]"
+              ${loading
+                ? "bg-slate-400 cursor-not-allowed"
+                : "bg-[#3E568C] hover:bg-[#354B7A]"
               }`}
           >
             {loading ? "Creating account..." : "Register"}

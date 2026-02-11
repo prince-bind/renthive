@@ -1,38 +1,31 @@
-export const revalidate = 60;
-
+import { headers } from "next/headers";
 import PropertyCard from "@/components/search/PropertyCard";
 import Pagination from "@/components/search/Pagination";
-import { searchProperties } from "@/actions/searchProperties";
-import { PropertyType, GenderType, OccupancyType } from "@prisma/client";
 import Link from "next/link";
-import type { Metadata } from "next";
 
-// Helper for type-safe Enum casting
-function safeEnum<T>(val: string | undefined, enumObj: object): T | undefined {
-  return Object.values(enumObj).includes(val) ? (val as T) : undefined;
-}
+async function fetchSearchResults(params: Record<string, string>) {
+  const q = new URLSearchParams(params).toString();
 
-export async function generateMetadata({
-  searchParams,
-}: {
-  searchParams: Promise<Record<string, string>>;
-}): Promise<Metadata> {
-  const params = await searchParams;
-  const parts: string[] = [];
+  const h = await headers();
+  const host = h.get("host");
 
-  if (params.type) parts.push(params.type === "PG" ? "PGs" : "Flats");
-  else parts.push("PGs & Flats");
+  if (!host) {
+    throw new Error("No host header");
+  }
 
-  if (params.city) parts.push(`in ${params.city}`);
-  if (params.gender) parts.push(`for ${params.gender.toLowerCase()}`);
-  
-  const page = params.page ? Number(params.page) : 1;
-  const titleBase = parts.join(" ");
-  
-  return {
-    title: page > 1 ? `${titleBase} – Page ${page} | RentHive` : `${titleBase} | RentHive`,
-    description: "Find verified PGs and flats near colleges. Filter by city, rent, gender, occupancy, and more on RentHive.",
-  };
+  const protocol =
+    process.env.NODE_ENV === "development" ? "http" : "https";
+
+  const res = await fetch(
+    `${protocol}://${host}/api/search?${q}`,
+    { cache: "no-store" }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch search results");
+  }
+
+  return res.json();
 }
 
 export default async function SearchPage({
@@ -41,36 +34,33 @@ export default async function SearchPage({
   searchParams: Promise<Record<string, string>>;
 }) {
   const params = await searchParams;
-  const page = params.page ? Number(params.page) : 1;
+  const page = Number(params.page || 1);
 
-  const { properties, totalPages } = await searchProperties({
-    city: params.city,
-    collegeId: params.collegeId,
-    type: safeEnum<PropertyType>(params.type, PropertyType),
-    gender: safeEnum<GenderType>(params.gender, GenderType),
-    occupancy: safeEnum<OccupancyType>(params.occupancy, OccupancyType),
-    rentMin: params.rentMin ? Number(params.rentMin) : undefined,
-    rentMax: params.rentMax ? Number(params.rentMax) : undefined,
-    page,
-    pageSize: 6,
-  });
+  const baseQuery = new URLSearchParams(params);
+  baseQuery.delete("page");
 
-  // ✅ NEW: Handle Empty State elegantly instead of 404
-  if (properties.length === 0) {
+  let data;
+  try {
+    data = await fetchSearchResults(params);
+  } catch {
     return (
-      <div className="flex flex-col items-center justify-center py-16 px-4 bg-white border border-gray-200 rounded-xl shadow-sm text-center">
-        <div className="bg-gray-50 p-4 rounded-full mb-4">
-           <span className="text-4xl">🔍</span>
-        </div>
-        <h2 className="text-xl font-semibold text-gray-900">No properties found</h2>
-        <p className="text-gray-500 mt-2 max-w-md">
-          We couldn't find any matches for your filters. Try removing some filters or searching for a different city.
-        </p>
-        <Link 
-          href="/search" 
-          className="mt-6 px-6 py-2.5 bg-[#3E568C] text-white rounded-lg hover:bg-[#334873] transition font-medium"
+      <div className="text-center py-20 text-gray-500">
+        Service temporarily unavailable. Please try again.
+      </div>
+    );
+  }
+
+  const { properties, totalPages } = data;
+
+  if (!properties.length) {
+    return (
+      <div className="flex flex-col items-center justify-center py-16">
+        <h2 className="text-xl font-semibold">No properties found</h2>
+        <Link
+          href="/search"
+          className="mt-4 px-6 py-2 bg-[#3E568C] text-white rounded-lg"
         >
-          Clear All Filters
+          Clear filters
         </Link>
       </div>
     );
@@ -79,12 +69,16 @@ export default async function SearchPage({
   return (
     <div className="space-y-6">
       <div className="space-y-4">
-        {properties.map((property) => (
+        {properties.map((property: any) => (
           <PropertyCard key={property.id} property={property} />
         ))}
       </div>
 
-      <Pagination currentPage={page} totalPages={totalPages} />
+      <Pagination
+        currentPage={page}
+        totalPages={totalPages}
+        baseQuery={baseQuery.toString()}
+      />
     </div>
   );
 }
